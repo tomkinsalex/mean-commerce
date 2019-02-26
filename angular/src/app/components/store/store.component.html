@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>E-Commerce App</span>
+
+    <span class="example-spacer"></span>
+    <div *ngIf="user === null">
+      <button mat-button [routerLink]="['/login']">Login</button>
+    </div>
+    <div *ngIf="user !== null">
+      <button mat-button [routerLink]="['/user']">Account</button>
+    </div>
+    <button mat-button (click)="openCart()">Cart <i class="fas fa-shopping-cart"></i></button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div id="page-content-wrapper">
+  <router-outlet></router-outlet>
+</div>

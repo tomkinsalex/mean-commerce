@@ -1,0 +1,41 @@
+ td, th {
+     width: 20%;
+     text-align: center;
+ }
+ tr{
+  height: 60px;
+  margin-bottom: 5px;
+ }
+
+ table{
+   margin-bottom: 30px;
+ }
+  .quantity-nav {
+    position: relative;
+    height: 60px;
+    
+  }
+  
+  .quantity-button {
+    position: relative;
+    font-size: 12px;
+    width: 60px;
+  }
+  
+  .quantity-button.quantity-up {
+    position: absolute;
+    height: 50%;
+    top: 0;
+    
+  }
+  
+  .quantity-button.quantity-down {
+    position: absolute;
+    bottom: -1px;
+    height: 50%;
+    width: 60px;
+  }
+
+  h5{
+    margin-top: 15px;
+  }

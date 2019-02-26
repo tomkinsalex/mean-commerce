@@ -1,0 +1,40 @@
+<h3 class="text-center">{{title}}</h3>
+<div class="container-fluid">
+
+    <h5>Customer</h5>
+    <div class="row">
+
+        <div class="col-sm">
+            <p>Name: {{formData.customer.firstName}} {{formData.customer.lastName}}</p>
+        </div>
+        <div class="col-sm">
+            <p>Email: {{formData.customer.email}}</p>
+        </div>
+        <div class="col-sm">
+            <p>Phone Number: {{formData.customer.phoneNumber}}</p>
+        </div>
+    </div>
+    <h5>Shipping Details</h5>
+    <div class="row">
+        <div class="col-sm">
+            <p>Address: {{formData.customer.address.street}}</p>
+        </div>
+        <div class="col-sm">
+            <p>City: {{formData.customer.address.city}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>State / Province: {{formData.customer.address.state}}</p>
+        </div>
+        <div class="col-sm">
+            <p>Zip Code: {{formData.customer.address.zip}}</p>
+        </div>
+        <div class="col-sm">
+            <p>Country: {{formData.customer.address.country}}</p>
+        </div>
+    </div>
+    <div class="text-center">
+        <button mat-raised-button color="primary" (click)="submit()"> Submit Order</button>
+    </div>
+</div>

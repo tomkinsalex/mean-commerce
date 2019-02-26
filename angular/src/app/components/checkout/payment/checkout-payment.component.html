@@ -1,0 +1,106 @@
+<form #paymentForm="ngForm" novalidate>
+    <h3 class="text-center">{{title}}</h3>
+    <br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <mat-form-field class="full-width">
+                    <input matInput #nameoncard="ngModel" required id="nameoncard" name="nameoncard" type="text"
+                        placeholder="Name on Card" [(ngModel)]="paymentInfo.nameOnCard">
+                    <mat-error class="error-message" [hidden]="nameoncard.valid">Name on card is required and must be
+                        valid</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <mat-form-field class="full-width">
+                    <input matInput #creditcard="ngModel" required id="creditcard" name="creditcard" type="text"
+                        placeholder="Credit Card" [(ngModel)]="paymentInfo.creditCard">
+                    <mat-error class="error-message" [hidden]="creditcard.valid">Credit Card Number is required and
+                        must
+                        be valid</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field class="full-width">
+                    <input matInput #cvc="ngModel" required id="cvc" name="cvc" type="text" placeholder="CVC"
+                        [(ngModel)]="paymentInfo.cvc">
+                    <mat-error class="error-message" [hidden]="cvc.valid">CVC is required and must be valid</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <mat-form-field class="full-width">
+                    <input matInput #expirymonth="ngModel" required id="expirymonth" name="expirymonth" type="text"
+                        placeholder="Expiry Month" [(ngModel)]="paymentInfo.expiryMonth">
+                    <mat-error class="error-message" [hidden]="expirymonth.valid">Expiry Month is required and must be
+                        valid</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field class="full-width">
+                    <input matInput #expiryyear="ngModel" required id="expiryyear" name="expiryyear" type="text"
+                        placeholder="Expiry Year" [(ngModel)]="paymentInfo.expiryYear">
+                    <mat-error class="error-message" [hidden]="expiryyear.valid">Expiry Year is required and must be
+                        valid</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            Different Billing Address <mat-slide-toggle (click)="changeBillingAddress()" value="difBillingAddress"></mat-slide-toggle>
+        </div>
+    </div>
+    <div *ngIf="difBillingAddress">
+        <div class="row">
+            <div class="col">
+                <mat-form-field class="full-width">
+                    <input matInput #address="ngModel" required id="address" name="address" type="text" placeholder="Address"
+                        [(ngModel)]="paymentInfo.billingAddress.street">
+                    <mat-error class="error-message" [hidden]="address.valid">Address is required and must be valid</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <mat-form-field class="full-width">
+                    <input matInput #city="ngModel" required id="city" name="city" type="text" placeholder="City"
+                        [(ngModel)]="paymentInfo.billingAddress.city">
+                    <mat-error class="error-message" [hidden]="city.valid">City is required and must be valid</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field class="full-width">
+                    <input matInput #zip="ngModel" required id="zip" name="zip" type="text" placeholder="Zip / Postal Code"
+                        [(ngModel)]="paymentInfo.billingAddress.zip">
+                    <mat-error class="error-message" [hidden]="zip.valid">Zip / Postal Code is required and must be
+                        valid</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <mat-form-field class="full-width">
+                    <input matInput #state="ngModel" required id="state" name="state" type="text" placeholder="State / Province"
+                        [(ngModel)]="paymentInfo.billingAddress.state">
+                    <mat-error class="error-message" [hidden]="state.valid">State is required and must be valid</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field class="full-width">
+                    <input matInput #country="ngModel" required id="country" name="country" type="text" placeholder="Country"
+                        [(ngModel)]="paymentInfo.billingAddress.country">
+                    <mat-error class="error-message" [hidden]="country.valid">Country is required</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button mat-raised-button color="primary" [disabled]="!paymentForm.valid" (click)="goToNext(paymentForm)">
+            Next <i class="far fa-arrow-alt-circle-right"></i>
+        </button>
+    </div>
+</form>

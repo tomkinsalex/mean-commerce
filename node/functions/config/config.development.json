@@ -1,0 +1,7 @@
+{
+    "databaseConfig": {
+        "env": "development",
+        "host": "localhost",
+        "database": "mean-commerce"
+    }
+}

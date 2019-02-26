@@ -1,0 +1,59 @@
+<form #confirmationForm="ngForm" novalidate>
+    <h3 class="head text-center">{{title}}</h3>
+    <br />
+    <div class="container-fluid">
+        <table class="full-width" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tr *ngFor="let item of orderInfo.orderItems">
+                <td>
+                    {{item.cartItem.title}}
+                </td>
+                <td>
+                    {{item.cartItem.quantity * item.cartItem.price | currency}}
+                </td>
+                <td>
+                    {{item.cartItem.quantity}}
+
+                </td>
+                <td>
+                    <div class="quantity-nav">
+                        <button mat-raised-button class="quantity-button quantity-up" (click)="updateItemQuantity(item.cartItem, 1)"
+                            [disabled]="item.maxQuantity === item.cartItem.quantity">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button mat-raised-button class="quantity-button quantity-down" (click)="updateItemQuantity(item.cartItem, -1)"
+                            [disabled]="1 === item.cartItem.quantity">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    <button mat-raised-button (click)="removeItem(item.cartItem)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </td>
+
+            </tr>
+        </table>
+        <h5>Shipping Options:</h5>
+        <mat-radio-group>
+            <div *ngFor="let option of deliveryOptions | async">
+                <mat-radio-button value="{{option.name}}" (click)="setDeliveryOption(option)">
+                    {{option.name}} - {{option.price | currency}} - {{option.description}}
+                </mat-radio-button>
+            </div>
+        </mat-radio-group>
+        <h5>Order Total: {{orderInfo.total | currency}}</h5>
+        <div class="text-center">
+            <button mat-raised-button color="primary" [disabled]="orderInfo.deliveryOption.id === '' || orderInfo.orderItems.length === 0 "
+                (click)="goToNext(confirmationForm)">Next <i class="far fa-arrow-alt-circle-right"></i></button>
+        </div>
+    </div>
+</form>

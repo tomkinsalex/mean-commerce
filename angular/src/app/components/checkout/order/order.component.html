@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="board">
+
+    <h3>{{title}}</h3>
+    <table class="full-width" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let item of orderInfo.orderItems">
+        <td>
+          {{item.cartItem.title}}
+        </td>
+        <td>
+          {{item.cartItem.quantity * item.cartItem.price | currency}}
+        </td>
+        <td>
+          {{item.cartItem.quantity}}
+        </td>
+      </tr>
+    </table>
+    <h5>Shipping: {{orderInfo.deliveryOption.name}}</h5>
+    
+    <h5>Order Total: {{orderInfo.total | currency}}</h5>
+
+    <div class="text-center">
+      <button mat-raised-button color="primary" (click)="navigateAway()">Back To Store</button>
+  </div>
+
+  </div>
+</div>
