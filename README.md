@@ -22,19 +22,19 @@ A basic E-Commerce Application
 
 4. Execute the following commands to get the Node API up and running: 
 	
-	`cd node`
-	`firebase use --add`
-	Select your new project
-	`cd functions`
-	`npm install`
-	`cd ..`
-	`firebase serve`
+	* `cd node`
+	* `firebase use --add`
+	* Select your new project
+	* `cd functions`
+	* `npm install`
+	* `cd ..`
+	* `firebase serve`
 
 4. Execute the following commands to serve the Angular app: 
 	
-	`cd angular`
-	`cp src/environments/environment.prod.example.ts src/environments/environment.prod.ts`
-	`npm install`
-	`ng serve`
+	* `cd angular`
+	* `cp src/environments/environment.prod.example.ts src/environments/environment.prod.ts`
+	* `npm install`
+	* `ng serve`
 
 5. Browse to http://localhost:4200
