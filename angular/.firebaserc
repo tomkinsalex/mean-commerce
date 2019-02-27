@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "angular-ecommerce-a1d63"
+    "default": "angular-ecommerce-a1d63",
+    "staging": "angular-ecommerce-a1d63"
   }
 }
