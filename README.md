@@ -36,7 +36,7 @@ A basic E-Commerce Application
 	* `cp src/environments/environment.prod.example.ts src/environments/environment.prod.ts`
 	* `npm install`
 
-6. In your Firebase Console in your new project -> Authentication -> Set Up Sign Method -> Enable Email -> Web Setup -> Copy the following section into `src/environments/environment.prod.example.ts`:
+6. In your Firebase Console in your new project -> Authentication -> Set Up Sign Method -> Enable Email -> Web Setup -> Copy the following section into `src/environments/environment.prod.ts`:
 
 	 `firebase: {
 	    apiKey: "YOUR_API_KEY",
