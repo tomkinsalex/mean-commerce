@@ -10,7 +10,9 @@ class Database {
 
     open(callback) {
         var options = {
-            promiseLibrary: global.Promise,
+            keepAlive: 300000, 
+            connectTimeoutMS: 30000, 
+            socketTimeoutMS : 30000,
             useNewUrlParser: true
         };
         mongoose.connect(connectionString, options, (err) => {

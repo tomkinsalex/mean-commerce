@@ -7,7 +7,7 @@ class OrderItemsRepository {
     // get all the orderitems
     getOrderItems(callback) {
         console.log('*** OrderItemsRepository.getOrderItems');
-        OrderItem.count((err, orderitemsCount) => {
+        OrderItem.countDocuments((err, orderitemsCount) => {
             let count = orderitemsCount;
             console.log(`OrderItems count: ${count}`);
 
@@ -48,7 +48,7 @@ class OrderItemsRepository {
 
     getOrderItemsForOrder(orderId, callback) {
         console.log('*** OrderItemsRepository.getOrderItems');
-        OrderItem.count({ order: orderId }, (err, orderitemsCount) => {
+        OrderItem.countDocuments({ order: orderId }, (err, orderitemsCount) => {
             let count = orderitemsCount;
             console.log(`OrderItems count: ${count}`);
             OrderItem.find({ order: orderId })
@@ -88,7 +88,7 @@ class OrderItemsRepository {
 
     getPagedOrderItems(skip, top, callback) {
         console.log('*** OrderItemsRepository.getPagedOrderItems');
-        OrderItem.count((err, orderitemsCount) => {
+        OrderItem.countDocuments((err, orderitemsCount) => {
             let count = orderitemsCount;
             console.log(`Skip: ${skip} Top: ${top}`);
             console.log(`OrderItems count: ${count}`);
@@ -134,7 +134,7 @@ class OrderItemsRepository {
     /* get the orderitem summary
     getOrderItemsSummary(skip, top, callback) {
         console.log('*** OrderItemsRepository.getOrderItemsSummary');
-        OrderItem.count((err, custsCount) => {
+        OrderItem.countDocuments((err, custsCount) => {
             let count = custsCount;
             console.log(`OrderItems count: ${count}`);
 

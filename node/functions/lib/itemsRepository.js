@@ -7,7 +7,7 @@ class ItemsRepository {
     // get all the Items
     getItems(callback) {
         console.log('*** ItemsRepository.getItems');
-        Item.count((err, itemsCount) => {
+        Item.countDocuments((err, itemsCount) => {
             let count = itemsCount;
             console.log(`Items count: ${count}`);
 
@@ -28,7 +28,7 @@ class ItemsRepository {
     // get all the Items for a ItemType
     getItemsForType(typeId, callback) {
         console.log('*** ItemsRepository.getItems');
-        Item.count({ item_type: typeId }, (err, itemsCount) => {
+        Item.countDocuments({ item_type: typeId }, (err, itemsCount) => {
             let count = itemsCount;
             console.log(`Items count: ${count}`);
 
@@ -48,7 +48,7 @@ class ItemsRepository {
     /*
     getPagedItems(skip, top, callback) {
         console.log('*** ItemsRepository.getPagedItems');
-        Item.count((err, itemsCount) => {
+        Item.countDocuments((err, itemsCount) => {
             let count = itemsCount;
             console.log(`Skip: ${skip} Top: ${top}`);
             console.log(`Items count: ${count}`);
@@ -74,7 +74,7 @@ class ItemsRepository {
     // get the Item summary
     getItemsSummary(skip, top, callback) {
         console.log('*** ItemsRepository.getItemsSummary');
-        Item.count((err, itemsCount) => {
+        Item.countDocuments((err, itemsCount) => {
             let count = itemsCount;
             console.log(`Items count: ${count}`);
 

@@ -7,7 +7,7 @@ class ShipmentsRepository {
     // get all the shipments
     getShipments(callback) {
         console.log('*** ShipmentsRepository.getShipments');
-        Shipment.count((err, shipmentsCount) => {
+        Shipment.countDocuments((err, shipmentsCount) => {
             let count = shipmentsCount;
             console.log(`Shipments count: ${count}`);
 
@@ -38,7 +38,7 @@ class ShipmentsRepository {
 
     getPagedShipments(skip, top, callback) {
         console.log('*** ShipmentsRepository.getPagedShipments');
-        Shipment.count((err, shipmentsCount) => {
+        Shipment.countDocuments((err, shipmentsCount) => {
             let count = shipmentsCount;
             console.log(`Skip: ${skip} Top: ${top}`);
             console.log(`Shipments count: ${count}`);
@@ -74,7 +74,7 @@ class ShipmentsRepository {
     /* get the shipment summary
     getShipmentsSummary(skip, top, callback) {
         console.log('*** ShipmentsRepository.getShipmentsSummary');
-        Shipment.count((err, custsCount) => {
+        Shipment.countDocuments((err, custsCount) => {
             let count = custsCount;
             console.log(`Shipments count: ${count}`);
 

@@ -7,7 +7,7 @@ class PaymentsRepository {
     // get all the payments
     getPayments(callback) {
         console.log('*** PaymentsRepository.getPayments');
-        Payment.count((err, paymentsCount) => {
+        Payment.countDocuments((err, paymentsCount) => {
             let count = paymentsCount;
             console.log(`Payments count: ${count}`);
 
@@ -38,7 +38,7 @@ class PaymentsRepository {
 
     getPagedPayments(skip, top, callback) {
         console.log('*** PaymentsRepository.getPagedPayments');
-        Payment.count((err, paymentsCount) => {
+        Payment.countDocuments((err, paymentsCount) => {
             let count = paymentsCount;
             console.log(`Skip: ${skip} Top: ${top}`);
             console.log(`Payments count: ${count}`);
@@ -74,7 +74,7 @@ class PaymentsRepository {
     /* get the payment summary
     getPaymentsSummary(skip, top, callback) {
         console.log('*** PaymentsRepository.getPaymentsSummary');
-        Payment.count((err, custsCount) => {
+        Payment.countDocuments((err, custsCount) => {
             let count = custsCount;
             console.log(`Payments count: ${count}`);
 

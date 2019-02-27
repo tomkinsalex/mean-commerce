@@ -7,7 +7,7 @@ class CustomersRepository {
     // get all the customers
     getCustomers(callback) {
         console.log('*** CustomersRepository.getCustomers');
-        Customer.count((err, custsCount) => {
+        Customer.countDocuments((err, custsCount) => {
             let count = custsCount;
             console.log(`Customers count: ${count}`);
 
@@ -27,7 +27,7 @@ class CustomersRepository {
 
     getPagedCustomers(skip, top, callback) {
         console.log('*** CustomersRepository.getPagedCustomers');
-        Customer.count((err, custsCount) => {
+        Customer.countDocuments((err, custsCount) => {
             let count = custsCount;
             console.log(`Skip: ${skip} Top: ${top}`);
             console.log(`Customers count: ${count}`);
@@ -53,7 +53,7 @@ class CustomersRepository {
     /* get the customer summary
     getCustomersSummary(skip, top, callback) {
         console.log('*** CustomersRepository.getCustomersSummary');
-        Customer.count((err, custsCount) => {
+        Customer.countDocuments((err, custsCount) => {
             let count = custsCount;
             console.log(`Customers count: ${count}`);
 
@@ -120,7 +120,7 @@ class CustomersRepository {
         customer.city = body.city;
         customer.state = body.state;
         customer.zip_code = body.zip_code;
-        customer.country = body.country;
+        customer.countDocumentsry = body.countDocumentsry;
         customer.auth_id = body.auth_id
         customer.payment_host_id = body.payment_host_id;
 
@@ -151,7 +151,7 @@ class CustomersRepository {
             customer.city = body.city || customer.city;
             customer.state = body.state || customer.state;
             customer.zip_code = body.zip_code || customer.zip_code;
-            customer.country = body.country || customer.country;
+            customer.countDocumentsry = body.countDocumentsry || customer.countDocumentsry;
             customer.auth_id = body.auth_id || customer.auth_id;
             customer.payment_host_id = body.payment_host_id || customer.payment_host_id;
 

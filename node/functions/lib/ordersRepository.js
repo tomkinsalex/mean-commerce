@@ -7,7 +7,7 @@ class OrdersRepository {
     // get all the orders
     getOrders(callback) {
         console.log('*** OrdersRepository.getOrders');
-        Order.count((err, ordersCount) => {
+        Order.countDocuments((err, ordersCount) => {
             let count = ordersCount;
             console.log(`Orders count: ${count}`);
 
@@ -29,7 +29,7 @@ class OrdersRepository {
 
     getPagedOrders(skip, top, callback) {
         console.log('*** OrdersRepository.getPagedOrders');
-        Order.count((err, ordersCount) => {
+        Order.countDocuments((err, ordersCount) => {
             let count = ordersCount;
             console.log(`Skip: ${skip} Top: ${top}`);
             console.log(`Orders count: ${count}`);
@@ -56,7 +56,7 @@ class OrdersRepository {
     /* get the order summary
     getOrdersSummary(skip, top, callback) {
         console.log('*** OrdersRepository.getOrdersSummary');
-        Order.count((err, custsCount) => {
+        Order.countDocuments((err, custsCount) => {
             let count = custsCount;
             console.log(`Orders count: ${count}`);
 
