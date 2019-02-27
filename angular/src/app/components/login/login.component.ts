@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialogRef } from "@angular/material";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '@/services'
@@ -17,8 +18,8 @@ export class LoginComponent {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
-  ) {
+    private fb: FormBuilder,
+    public thisDialogRef: MatDialogRef<LoginComponent>) {
     this.createForm();
   }
 
@@ -29,31 +30,15 @@ export class LoginComponent {
     });
   }
 
-  tryFacebookLogin() {
-    this.authService.doFacebookLogin()
-      .then(res => {
-        this.router.navigate(['/user']);
-      })
-  }
-
-  tryTwitterLogin() {
-    this.authService.doTwitterLogin()
-      .then(res => {
-        this.router.navigate(['/user']);
-      })
-  }
-
-  tryGoogleLogin() {
-    this.authService.doGoogleLogin()
-      .then(res => {
-        this.router.navigate(['/user']);
-      })
+  openRegister() {
+    this.thisDialogRef.close('register');
   }
 
   tryLogin(value) {
     this.authService.doLogin(value)
       .then(res => {
         this.router.navigate(['/user']);
+        this.thisDialogRef.close();
       }, err => {
         console.log(err);
         this.errorMessage = err.message;

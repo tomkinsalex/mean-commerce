@@ -4,7 +4,7 @@
 
     <span class="example-spacer"></span>
     <div *ngIf="user === null">
-      <button mat-button [routerLink]="['/login']">Login</button>
+      <button mat-button (click)="openLogin()">Login</button>
     </div>
     <div *ngIf="user !== null">
       <button mat-button [routerLink]="['/user']">Account</button>

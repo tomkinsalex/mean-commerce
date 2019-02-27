@@ -1,33 +1,35 @@
-<div class="board">
-  <div class="container-fluid">
-    <h3 class="text-center">Register</h3>
-    <form [formGroup]="registerForm">
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput type="email" formControlName="email" placeholder="Email">
-          </mat-form-field>
-        </div>
+<h2 mat-dialog-title class="text-center">Register</h2>
+<mat-dialog-content>
+  <form [formGroup]="registerForm">
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput type="email" formControlName="email" placeholder="Email">
+        </mat-form-field>
       </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input type="password" matInput formControlName="password" placeholder="Password">
-          </mat-form-field>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input type="password" matInput formControlName="password" placeholder="Password">
+        </mat-form-field>
       </div>
-      <div class="text-center">
-          <label class="mat-error" role="alert">{{errorMessage}}</label>
-      </div>
-      <div class="text-center">
-        <br />
-        <button type="submit" (click)="tryRegister(registerForm.value)" mat-raised-button color="primary">Register</button>
-      </div>
-      <div class="text-center">
-        <br />
-        <p>Already have an account yet? <a [routerLink]="['/login']">Login</a></p>
-        <label class="success">{{successMessage}}</label>
-      </div>
-    </form>
-  </div>
-</div>
+    </div>
+    <div class="text-center">
+      <label class="mat-error" role="alert">{{errorMessage}}</label>
+    </div>
+
+    
+    <div class="text-center">
+      <button type="submit" (click)="tryRegister(registerForm.value)" mat-raised-button
+        color="primary">Register</button>
+    </div>
+    <div class="text-center">
+      <p>Already have an account yet?</p>
+    </div>
+    <div class="text-center">
+      <button mat-button (click)="openLogin()">Login</button>
+      <label class="success">{{successMessage}}</label>
+    </div>
+  </form>
+</mat-dialog-content>

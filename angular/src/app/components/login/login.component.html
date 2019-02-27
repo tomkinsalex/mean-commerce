@@ -1,33 +1,33 @@
-<div class="board">
-  <div class="container-fluid">
-    <h3 class="text-center">Login</h3>
-    <form [formGroup]="loginForm">
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput type="email" formControlName="email" placeholder="Email">
-          </mat-form-field>
-        </div>
+<h2 mat-dialog-title class="text-center">Login</h2>
+<mat-dialog-content>
+  <form [formGroup]="loginForm">
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput type="email" formControlName="email" placeholder="Email">
+        </mat-form-field>
       </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input type="password" matInput formControlName="password" placeholder="Password">
-          </mat-form-field>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input type="password" matInput formControlName="password" placeholder="Password">
+        </mat-form-field>
       </div>
+    </div>
+    <div class="text-center">
+      <label class="mat-error" role="alert">{{errorMessage}}</label>
+    </div>
+
+    
       <div class="text-center">
-          <label class="mat-error" role="alert">{{errorMessage}}</label>
-      </div>
-      <div class="text-center">
-          <br/>
         <button type="submit" (click)="tryLogin(loginForm.value)" mat-raised-button color="primary">Login</button>
       </div>
       <div class="text-center">
-        <br/>
-          <p>No account yet? <a [routerLink]="['/register']">Create an account</a></p>
+        <p>No account yet?</p>
       </div>
-    </form>
-  </div>
-</div>
-
+      <div class="text-center">
+        <button mat-button (click)="openRegister()">Register</button>
+      </div>
+  </form>
+</mat-dialog-content>

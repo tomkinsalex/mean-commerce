@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { ActivatedRoute } from '@angular/router';
 
+import { LoginComponent } from '@/components/login';
+import { RegisterComponent } from '@/components/register';
 import { CartComponent } from '@/components/cart';
 import { UserService } from '@/services';
 import { MUser } from '@/model';
@@ -34,4 +36,27 @@ export class StoreComponent implements OnInit {
     this.dialog.open(CartComponent, dialogConfig);
   }
 
+  openLogin() {
+    const dialogRef = this.dialog.open(LoginComponent, {
+      width: '350px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === 'register'){
+        this.openRegister();
+      }
+    });
+  }
+
+  openRegister() {
+    const dialogRef = this.dialog.open(RegisterComponent, {
+      width: '350px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === 'login'){
+        this.openLogin();
+      }
+    });
+  }
 }

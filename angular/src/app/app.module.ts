@@ -15,6 +15,8 @@ import { MaterialModule, CoreModule } from '@/modules';
 import { CartComponent } from '@/components/cart';
 
 import { environment } from 'environments/environment.prod';
+import { LoginComponent } from './components/login';
+import { RegisterComponent } from './components/register';
 
 @NgModule({
   imports: [
@@ -32,9 +34,11 @@ import { environment } from 'environments/environment.prod';
   declarations: [
     AppComponent,
     appRouting.components,
-    CartComponent
+    CartComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   bootstrap: [AppComponent],
-  entryComponents: [CartComponent]
+  entryComponents: [CartComponent, LoginComponent, RegisterComponent]
 })
 export class AppModule { }
