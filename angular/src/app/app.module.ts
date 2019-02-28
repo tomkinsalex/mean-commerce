@@ -13,10 +13,10 @@ import { AppRoutingModule, appRouting } from '@/app.routing';
 import { AppComponent } from '@/app.component';
 import { MaterialModule, CoreModule } from '@/modules';
 import { CartComponent } from '@/components/cart';
+import { LoginComponent } from '@/components/login';
+import { RegisterComponent } from '@/components/register';
 
 import { environment } from 'environments/environment.prod';
-import { LoginComponent } from './components/login';
-import { RegisterComponent } from './components/register';
 
 @NgModule({
   imports: [

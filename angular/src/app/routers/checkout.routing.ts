@@ -5,7 +5,7 @@ import { CheckoutComponent, CheckoutConfirmationComponent, CheckoutCustomerCompo
 import { CheckoutFlowRouteGuard, CanDeactivateGuard } from '@/route-guards';
 
 
-export const routes: Routes = [
+const routes: Routes = [
     {   
         path: '', component: CheckoutComponent, children: [
             { path: '', pathMatch: 'full', redirectTo: 'confirmation' },

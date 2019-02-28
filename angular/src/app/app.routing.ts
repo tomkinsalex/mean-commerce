@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
 
 import { StoreComponent, ItemComponent, MainComponent } from "@/components/store";
-import { UserComponent } from '@/components/user';
 import { UserResolver } from '@/resolvers';
 
 import { AuthGuard, PopulatedCartRouteGuard } from "@/route-guards";
@@ -20,14 +19,17 @@ export const routes: Routes = [
   {
     path: 'checkout', canActivate:[ PopulatedCartRouteGuard ], loadChildren: '@/modules/checkout.module#CheckoutModule'
   },
-  { path: 'user', component: UserComponent, resolve: { data: UserResolver } },
+  // { path: 'user', component: UserComponent, resolve: { data: UserResolver } },
+  {
+    path: 'user', loadChildren: '@/modules/user.module#UserModule'
+  },
   { path: '**', pathMatch: 'full', redirectTo: 'store/main' } //catch any unfound routes and redirect to home page
 ];
 
 export const appRouting: IRouting = {
   routes: RouterModule.forRoot(routes),
   components: [
-    ItemComponent, UserComponent,
+    ItemComponent,
     StoreComponent, MainComponent,
   ]
 };
