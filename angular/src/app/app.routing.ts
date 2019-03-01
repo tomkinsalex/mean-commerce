@@ -19,7 +19,6 @@ export const routes: Routes = [
   {
     path: 'checkout', canActivate:[ PopulatedCartRouteGuard ], loadChildren: '@/modules/checkout.module#CheckoutModule'
   },
-  // { path: 'user', component: UserComponent, resolve: { data: UserResolver } },
   {
     path: 'user', loadChildren: '@/modules/user.module#UserModule'
   },
@@ -29,8 +28,8 @@ export const routes: Routes = [
 export const appRouting: IRouting = {
   routes: RouterModule.forRoot(routes),
   components: [
-    ItemComponent,
-    StoreComponent, MainComponent,
+    ItemComponent, MainComponent,
+    StoreComponent,
   ]
 };
 
