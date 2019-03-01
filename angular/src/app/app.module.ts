@@ -17,6 +17,8 @@ import { LoginComponent } from '@/components/login';
 import { RegisterComponent } from '@/components/register';
 
 import { environment } from 'environments/environment.prod';
+import { MatSpinner } from '@angular/material';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   imports: [
@@ -29,7 +31,8 @@ import { environment } from 'environments/environment.prod';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AppRoutingModule,
     CoreModule,
-    MaterialModule
+    MaterialModule,
+    OverlayModule
   ],
   declarations: [
     AppComponent,
@@ -39,6 +42,6 @@ import { environment } from 'environments/environment.prod';
     RegisterComponent
   ],
   bootstrap: [AppComponent],
-  entryComponents: [CartComponent, LoginComponent, RegisterComponent]
+  entryComponents: [CartComponent, LoginComponent, RegisterComponent, MatSpinner]
 })
 export class AppModule { }

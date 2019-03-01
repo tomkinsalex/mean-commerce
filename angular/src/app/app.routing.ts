@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
 
 import { StoreComponent, ItemComponent, MainComponent } from "@/components/store";
-import { UserResolver } from '@/resolvers';
+import { UserResolver, ItemsResolver } from '@/resolvers';
 
 import { AuthGuard, PopulatedCartRouteGuard } from "@/route-guards";
 import { IRouting } from '@/model';
@@ -13,7 +13,7 @@ export const routes: Routes = [
     path: 'store', component: StoreComponent, resolve: { data: UserResolver }, children: [
       { path: '', pathMatch: 'full', redirectTo: 'main' },
       { path: 'item/:id', component: ItemComponent },
-      { path: 'main', component: MainComponent },
+      { path: 'main', component: MainComponent, resolve: { data: ItemsResolver } },
     ]
   },
   {

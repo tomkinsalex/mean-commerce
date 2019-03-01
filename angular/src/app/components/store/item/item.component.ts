@@ -27,7 +27,6 @@ export class ItemComponent implements OnInit {
   ngOnInit() {
     let id = this.route.snapshot.params['id'];
     this.getItem(id);
-
   }
 
   public addItemToCart(item: IItem, amount: number): void {

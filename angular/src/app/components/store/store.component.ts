@@ -5,9 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LoginComponent } from '@/components/login';
 import { RegisterComponent } from '@/components/register';
 import { CartComponent } from '@/components/cart';
-import { UserService } from '@/services';
 import { MUser } from '@/model';
-
 
 @Component({
   selector: 'app-store',
@@ -15,12 +13,13 @@ import { MUser } from '@/model';
   styleUrls: ['./store.component.scss']
 })
 export class StoreComponent implements OnInit {
-              
-  user: MUser = null;
-  
-  constructor(private dialog: MatDialog, private userService: UserService,
-            private route: ActivatedRoute) { }
 
+  user: MUser = null;
+
+  constructor(
+    private dialog: MatDialog,
+    private route: ActivatedRoute
+    ) { }
 
   ngOnInit() {
     this.route.data.subscribe(routeData => {
@@ -30,7 +29,7 @@ export class StoreComponent implements OnInit {
       }
     })
   }
-
+  
   openCart() {
     const dialogConfig = new MatDialogConfig();
     this.dialog.open(CartComponent, dialogConfig);
@@ -42,7 +41,7 @@ export class StoreComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result === 'register'){
+      if (result === 'register') {
         this.openRegister();
       }
     });
@@ -54,7 +53,7 @@ export class StoreComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result === 'login'){
+      if (result === 'login') {
         this.openLogin();
       }
     });

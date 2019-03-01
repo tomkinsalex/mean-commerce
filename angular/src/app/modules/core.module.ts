@@ -3,11 +3,11 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import {
   CartService, ItemDataService, StorageService, LocalStorageService, DeliveryOptionsDataService,
   OrderDataService, OrderItemDataService, ItemTypeDataService,
-  CustomerDataService, PaymentDataService, ShipmentDataService, AuthService, UserService
+  CustomerDataService, PaymentDataService, ShipmentDataService, AuthService, UserService, UiLoadingService
 } from '@/services';
 
 import { AuthGuard, PopulatedCartRouteGuard } from '@/route-guards';
-import { UserResolver } from '@/resolvers';
+import { UserResolver, ItemsResolver } from '@/resolvers';
 
 import { EnsureModuleLoadedOnceGuard } from '@/shared';
 
@@ -19,6 +19,7 @@ import { EnsureModuleLoadedOnceGuard } from '@/shared';
     AuthService,
     UserService,
     UserResolver,
+    ItemsResolver,
     AuthGuard,
     CartService,
     PopulatedCartRouteGuard,
@@ -30,6 +31,7 @@ import { EnsureModuleLoadedOnceGuard } from '@/shared';
     ShipmentDataService,
     ItemTypeDataService,
     CustomerDataService,
+    UiLoadingService,
     { provide: StorageService, useClass: LocalStorageService },
     {
       deps: [StorageService, ItemDataService, DeliveryOptionsDataService],

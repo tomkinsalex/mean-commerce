@@ -5,8 +5,7 @@ import { Observable, Observer } from "rxjs";
 
 import { ItemDataService, CartService } from '@/services';
 import { IItem } from "@/model";
-
-
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,18 +14,19 @@ import { IItem } from "@/model";
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  public items: Observable<IItem[]>;
+  public items: IItem[];
   public item: IItem;
   public constructor(private itemService: ItemDataService,
     private cartService: CartService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar, private route: ActivatedRoute) { }
 
   public ngOnInit(): void {
-    this.items = this.getItems();
-  }
-
-  public getItems(): Observable<IItem[]> {
-    return this.itemService.all();
+    this.route.data.subscribe(routeData => {
+      let data = routeData['data'];
+      if (data) {
+        this.items = data;
+      }
+    })
   }
 
   public addItemToCart(item: IItem, amount: number): void {

@@ -8,14 +8,15 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
   imports: [MatSnackBarModule, MatTabsModule, MatRadioModule, MatInputModule, MatButtonModule,
     MatSidenavModule, MatToolbarModule, MatCardModule, MatDialogModule, MatListModule,
-    MatTableModule, MatSlideToggleModule],
+    MatTableModule, MatSlideToggleModule, MatProgressSpinnerModule],
   exports: [MatSnackBarModule, MatTabsModule, MatRadioModule, MatInputModule, MatButtonModule,
     MatSidenavModule, MatToolbarModule, MatCardModule, MatDialogModule, MatListModule,
-    MatTableModule, MatSlideToggleModule]
+    MatTableModule, MatSlideToggleModule, MatProgressSpinnerModule]
 })
 export class MaterialModule { }
