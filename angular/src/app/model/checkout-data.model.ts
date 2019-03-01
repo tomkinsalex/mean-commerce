@@ -12,6 +12,12 @@ export class MCheckoutFormData {
         this.orderInfo = new MOrderInfo();
     }
 
+    test(): void{
+        this.customer.test();
+        this.paymentInfo.test();
+        this.orderInfo.test();
+    }
+
     clear() {
         this.customer = new MCustomer();
         this.paymentInfo = new MPaymentInfo();
@@ -27,22 +33,20 @@ export class MCustomer {
     phoneNumber: string;
     address: MAddress;
 
-    //real
-/*     constructor(){
+    constructor(){
         this.firstName = '';
         this.lastName = '';
         this.email = '';
         this.phoneNumber = '';
         this.address = new MAddress();
-    } */
-    //testing
-    constructor(){
+    }
+
+    test(): void{
         this.firstName = 'John';
         this.lastName = 'Smith';
         this.email = 'email@email.com';
         this.phoneNumber = '613-456-7898';
-        this.address = new MAddress();
-
+        this.address.test();
     }
 }
 
@@ -53,16 +57,16 @@ export class MAddress {
     zip: string = '';
     country: string = '';
 
-/*     constructor(){
+    constructor(){
     this.street= '';
     this.city= '';
     this.state= '';
     this.zip= '';
     this.country= '';
-    } */
+    }
 
     //testing
-    constructor(){
+    test(): void{
         this.street= 'Street';
         this.city= 'City';
         this.state= 'ST';
@@ -80,12 +84,21 @@ export class MPaymentInfo {
     billingAddress: MAddress ;
 
     constructor(){
+        this.nameOnCard = '';
+        this.creditCard = null;
+        this.cvc = null;
+        this.expiryMonth = null;
+        this.expiryYear = null;
+        this.billingAddress = new MAddress();
+    }
+
+    test(): void{
         this.nameOnCard = 'John Doe';
         this.creditCard = 1000;
         this.cvc = 111;
         this.expiryMonth = 10;
         this.expiryYear = 10;
-        this.billingAddress = new MAddress();
+        this.billingAddress.test();
 
     }
 }
@@ -95,7 +108,8 @@ export class MOrderInfo {
     orderItems: MOrderItem[];
     sub_total: number;
     total: number;
-/*     constructor() {
+
+    constructor() {
         this.deliveryOption = {
             id: '',
             name: '',
@@ -103,10 +117,10 @@ export class MOrderInfo {
             price: 0
         };
         this.orderItems = [new MOrderItem()];
-    } */
+    }
 
     //testing
-    constructor() {
+    test(): void {
         this.deliveryOption = {
             id: "c7f6535c-c56b-4e57-94dc-0e95b936b00b",
             name: "Express",
@@ -117,6 +131,7 @@ export class MOrderInfo {
         this.sub_total = 0;
         this.orderItems = [new MOrderItem()];
     }
+
     public calculateTotals(): void {
         this.sub_total = 0;
         this.orderItems.map( orderItem => {

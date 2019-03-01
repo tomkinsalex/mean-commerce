@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { environment } from 'environments/environment';
+
 import { Observable } from "rxjs";
 import { tap } from 'rxjs/operators';
 
@@ -36,6 +38,9 @@ export class CheckoutFormDataService {
         this.isPaymentFormValid = false;
         this.isCustomerFormValid = false;
         this.formData = new MCheckoutFormData();
+        if(!environment.production){
+            this.formData.test();
+        }
     }
 
     public getCustomer(): MCustomer {
