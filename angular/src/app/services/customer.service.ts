@@ -5,30 +5,22 @@ import { environment } from 'environments/environment';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { CachingServiceBase } from "./caching.service";
 import { ICustomer, ICustomerResponse } from "@/model";
 
 @Injectable()
-export class CustomerDataService extends CachingServiceBase {
-  private customers: Observable<ICustomer[]>;
+export class CustomerDataService {
 
   baseUrl: string = '/api/customers';
 
-  public constructor(private http: HttpClient) {
-    super();
-  }
+  public constructor(private http: HttpClient) {}
 
   public all(): Observable<ICustomer[]> {
-    return this.cache<ICustomer[]>(() =>
-      this.customers, (val: Observable<ICustomer[]>) =>
-        this.customers = val, () =>
-        this.http
+    return this.http
           .get<ICustomer[]>(environment.baseUrl + this.baseUrl)
           .pipe( map((customers: ICustomer[]) => {
             return customers;
           }),
-          catchError(this.handleError)));
-
+          catchError(this.handleError));
   }
 
   public getCustomer(id: string): Observable<ICustomer> {

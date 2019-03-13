@@ -1,5 +1,4 @@
 ﻿export * from './auth.service';
-export * from './caching.service';
 export * from './cart.service';
 export * from './checkout-data.service';
 export * from './checkout-flow.service';

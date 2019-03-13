@@ -6,29 +6,21 @@ import { throwError as observableThrowError, Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { IItem, IItemResponse } from "@/model";
-import { CachingServiceBase } from "./caching.service";
 
 @Injectable()
-export class ItemDataService extends CachingServiceBase {
-  private items: Observable<IItem[]>;
-  private item: Observable<IItem>;
+export class ItemDataService {
 
   baseUrl: string = '/api/items';
 
-  public constructor(private http: HttpClient) {
-    super();
-  }
+  public constructor(private http: HttpClient) {}
 
   public all(): Observable<IItem[]> {
-    return this.cache<IItem[]>(() =>
-      this.items, (val: Observable<IItem[]>) =>
-        this.items = val, () =>
-        this.http
+    return this.http
           .get<IItem[]>(environment.baseUrl + this.baseUrl)
           .pipe(map((items: IItem[]) => {
             return items;
           }),
-            catchError(this.handleError)));
+            catchError(this.handleError));
 
   }
 

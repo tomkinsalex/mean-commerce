@@ -23,6 +23,10 @@ import { OverlayModule } from '@angular/cdk/overlay';
 @NgModule({
   imports: [
     HttpClientModule,
+/*     HttpClientXsrfModule.withOptions({
+       cookieName: 'My-XSRF-TOKEN',
+       headerName: 'My-X-XSRF-TOKEN',
+    }), */
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,

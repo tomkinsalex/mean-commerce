@@ -6,28 +6,22 @@ import { map, catchError } from 'rxjs/operators';
 import {throwError as observableThrowError,  Observable } from 'rxjs';
 
 import { IOrder , IOrderResponse} from "@/model";
-import { CachingServiceBase } from "./caching.service";
 
 @Injectable()
-export class OrderDataService extends CachingServiceBase {
+export class OrderDataService {
   private orders: Observable<IOrder[]>;
 
   baseUrl: string = '/api/orders';
 
-  public constructor(private http: HttpClient) {
-    super();
-  }
+  public constructor(private http: HttpClient) {}
 
   public all(): Observable<IOrder[]> {
-    return this.cache<IOrder[]>(() =>
-      this.orders, (val: Observable<IOrder[]>) =>
-        this.orders = val, () =>
-        this.http
+    return this.http
           .get<IOrder[]>(environment.baseUrl + this.baseUrl)
           .pipe(map((orders: IOrder[]) => {
             return orders;
           }),
-          catchError(this.handleError)));
+          catchError(this.handleError));
 
   }
 
