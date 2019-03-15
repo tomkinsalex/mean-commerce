@@ -9,7 +9,6 @@ import { IShipment, IShipmentResponse } from "@/model";
 
 @Injectable()
 export class ShipmentDataService {
-  private shipments: Observable<IShipment[]>;
 
   baseUrl: string = '/api/shipments';
 

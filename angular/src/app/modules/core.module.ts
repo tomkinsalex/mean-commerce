@@ -3,11 +3,14 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import {
   CartService, ItemDataService, StorageService, LocalStorageService, DeliveryOptionsDataService,
   OrderDataService, OrderItemDataService, ItemTypeDataService,
-  CustomerDataService, PaymentDataService, ShipmentDataService, AuthService, UserService, UiLoadingService
+  CustomerDataService, PaymentDataService, ShipmentDataService, AuthService, UserService, UiLoadingService, ApiAuthService
 } from '@/services';
 
 import { AuthGuard, PopulatedCartRouteGuard } from '@/route-guards';
 import { UserResolver, ItemsResolver } from '@/resolvers';
+
+import { RequestCache, RequestCacheWithMap } from '@/services';
+import { httpInterceptorProviders } from '@/http-interceptors/index';
 
 import { EnsureModuleLoadedOnceGuard } from '@/shared';
 
@@ -16,6 +19,7 @@ import { EnsureModuleLoadedOnceGuard } from '@/shared';
 
   ],
   providers: [
+    ApiAuthService,
     AuthService,
     UserService,
     UserResolver,
@@ -37,7 +41,9 @@ import { EnsureModuleLoadedOnceGuard } from '@/shared';
       deps: [StorageService, ItemDataService, DeliveryOptionsDataService],
       provide: CartService,
       useClass: CartService
-    }
+    },
+    { provide: RequestCache, useClass: RequestCacheWithMap },
+    httpInterceptorProviders
   ]
 })
 export class CoreModule extends EnsureModuleLoadedOnceGuard {    //Ensure that CoreModule is only loaded into AppModule

@@ -8,7 +8,8 @@ const express       = require('express'),
     router          = require('./routes/router'),
     database        = require('./lib/database'),
     seeder          = require('./lib/dbSeeder'),
-    app             = express();
+    app             = express(),
+    helmet          = require('helmet');
 
 class Server {
 
@@ -22,17 +23,20 @@ class Server {
 
     start() {
         app.listen();
+        console.log("Hi");
     }
 
 
     initExpressMiddleWare() {
+        app.use(helmet());
         app.use(express.static(__dirname + '/public'));
         app.use(morgan('dev'));
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
         app.use(errorhandler());
         app.use(cookieParser());
-        //app.use(csrf({ cookie: true }));
+        app.use(csrf({ cookie: true }));
+        
         
         var allowCrossDomain = function(req, res, next) {
             res.header('Access-Control-Allow-Origin', "*");
@@ -42,16 +46,15 @@ class Server {
         }
         app.use(allowCrossDomain);
 
-        /*
+  
         app.use((req, res, next) => {
             let csrfToken = req.csrfToken();
             res.locals._csrf = csrfToken;
             res.cookie('XSRF-TOKEN', csrfToken);
             next();
-        });
-        */
+        }); 
 
-        process.on('uncaughtException', (err) => {
+         process.on('uncaughtException', (err) => {
             if (err) console.log(err, err.stack);
         });
     }

@@ -13,5 +13,7 @@ export * from './shipment.service';
 export * from './storage.service';
 export * from './user.service';
 export * from './ui.loading.service';
+export * from './request-cache.service';
+export * from './api.auth.service';
 
 

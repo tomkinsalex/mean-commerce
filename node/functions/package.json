@@ -7,7 +7,8 @@
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "test": "snyk test"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -18,7 +19,7 @@
     "express-session": "^1.15.6",
     "firebase-admin": "~7.0.0",
     "firebase-functions": "^2.2.0",
-    "hbs": "~4.0.1",
+    "helmet": "^3.15.1",
     "mongoose": "^5.2.15",
     "morgan": "~1.9.0",
     "serve-favicon": "~2.4.5"
@@ -29,8 +30,8 @@
     "del": "^3.0.0",
     "eslint": "^5.12.0",
     "eslint-plugin-promise": "^4.0.1",
-    "lite-server": "^2.4.0",
-    "run-sequence": "^2.2.0"
+    "run-sequence": "^2.2.0",
+    "snyk": "^1.136.0"
   },
   "private": true
 }
