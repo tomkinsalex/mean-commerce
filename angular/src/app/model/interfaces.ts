@@ -6,7 +6,7 @@ export interface IRouting {
 }
 
 export interface IItem {
-    _id?: string; 
+    _id?: string;
     item_type?: IItemType;
     title?: string;
     name?: string;
@@ -33,18 +33,36 @@ export interface IItemTypeResponse {
     error: string;
 }
 
-export interface ICustomer {
-    _id?: string; 
-    first_name?: string;
-    last_name?: string;
+export interface IUser {
+    _id?: string;
     email?: string;
+    password?: string;
+    role?: Role;
+}
+
+export enum Role {
+    USER = 'USER',
+    ADMIN = 'ADMIN',
+    GUEST = 'GUEST'
+}
+
+export interface IAuthResponse{
+    user_id: string;
+    status: boolean;
+    token: string;
+    error: string;
+    expires: number;
+}
+
+export interface ICustomer {
+    _id?: string;
+    user?: IUser;
     phone_number?: number;
     address?: string;
     city?: string;
     state?: string;
     zip_code?: string;
     country?: string;
-    auth_id?: string;
     payment_host_id?: string;
 }
 
@@ -111,9 +129,9 @@ export interface IShipmentResponse {
     error: string;
 }
 
-export interface IDeliveryOption{
+export interface IDeliveryOption {
     id: string;
     name: string;
-    description : string;
-    price : number;
+    description: string;
+    price: number;
 }

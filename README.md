@@ -36,17 +36,6 @@ A basic E-Commerce Application
 	* `cp src/environments/environment.prod.example.ts src/environments/environment.prod.ts`
 	* `npm install`
 
-6. In your Firebase Console in your new project -> Authentication -> Set Up Sign Method -> Enable Email -> Web Setup -> Copy the following section into `src/environments/environment.prod.ts`:
+5. Run `ng serve`
 
-	 `firebase: {
-	    apiKey: "YOUR_API_KEY",
-	    authDomain: "YOUR_AUTH_DOMAIN",
-	    databaseURL: "YOUR_DATABASE_URL",
-	    projectId: "YOUR_PROJECT_ID",
-	    storageBucket: "YOUR_STORAGE_BUCKET",
-	    messagingSenderId: "YOUR_SENDER_ID"
-	  }`
-
-7. Run `ng serve`
-
-8. Browse to http://localhost:4200
+6. Browse to http://localhost:4200

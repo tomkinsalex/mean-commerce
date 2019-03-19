@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { UserService, AuthService } from '@/services';
-import { MUser } from '@/model';
+import { AuthService } from '@/services';
+import { UserService } from '@/services/user.service';
 
 @Component({
   selector: 'page-user',
@@ -12,7 +12,6 @@ import { MUser } from '@/model';
 })
 export class UserComponent implements OnInit {
 
-  user: MUser = new MUser();
   profileForm: FormGroup;
 
   constructor(
@@ -30,24 +29,14 @@ export class UserComponent implements OnInit {
     this.route.data.subscribe(routeData => {
       let data = routeData['data'];
       if (data) {
-        this.user = data;
+        
       }
     });
   }
 
-  save(value) {
-    this.userService.updateCurrentUser(value)
-      .then(res => {
-        console.log(res);
-      }, err => console.log(err))
-  }
 
   logout() {
-    this.authService.doLogout()
-      .then((res) => {
-        this.router.navigate(['/store']);
-      }, (error) => {
-        console.log("Logout error", error);
-      });
+    this.authService.logout();
+    this.router.navigate(['/store']);
   }
 }

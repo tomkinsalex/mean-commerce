@@ -5,7 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { LoginComponent } from '@/components/login';
 import { RegisterComponent } from '@/components/register';
 import { CartComponent } from '@/components/cart';
-import { MUser } from '@/model';
+import { IUser } from '@/model';
+
 
 @Component({
   selector: 'app-store',
@@ -14,7 +15,7 @@ import { MUser } from '@/model';
 })
 export class StoreComponent implements OnInit {
 
-  user: MUser = null;
+  public user: IUser = null;
 
   constructor(
     private dialog: MatDialog,

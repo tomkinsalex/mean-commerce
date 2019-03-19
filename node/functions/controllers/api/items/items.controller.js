@@ -80,10 +80,29 @@ class ItemsController {
         console.log('*** updateItem');
         console.log('*** req.body');
         console.log(req.body);
+        itemsRepo.updateItem(req.params.id, req.body, (err, item) => {
+            if (err) {
+                console.log('*** updateItem error: ' + util.inspect(err));
+                res.json({ status: false, error: 'Update failed', item: null });
+            } else {
+                console.log('*** updateItem ok');
+                res.json({ status: true, error: null, item: item });
+            }
+        });
     }
 
     deleteItem(req, res) {
         console.log('*** deleteItem');
+
+        itemsRepo.deleteItem(req.params.id, (err) => {
+            if (err) {
+                console.log('*** deleteItem error: ' + util.inspect(err));
+                res.json({ status: false });
+            } else {
+                console.log('*** deleteItem ok');
+                res.json({ status: true });
+            }
+        });
     }
 
 }

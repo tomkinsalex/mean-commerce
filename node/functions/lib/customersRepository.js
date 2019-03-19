@@ -25,31 +25,6 @@ class CustomersRepository {
         });
     }
 
-    getPagedCustomers(skip, top, callback) {
-        console.log('*** CustomersRepository.getPagedCustomers');
-        Customer.countDocuments((err, custsCount) => {
-            let count = custsCount;
-            console.log(`Skip: ${skip} Top: ${top}`);
-            console.log(`Customers count: ${count}`);
-
-            Customer.find({})
-                    .sort({last_name: 1})
-                    .skip(skip)
-                    .limit(top)
-                    .exec((err, customers) => {
-                        if (err) { 
-                            console.log(`*** CustomersRepository.getPagedCustomers error: ${err}`); 
-                            return callback(err); 
-                        }
-                        callback(null, {
-                            count: count,
-                            customers: customers
-                        });
-                    });
-
-        });
-    }
-
     /* get the customer summary
     getCustomersSummary(skip, top, callback) {
         console.log('*** CustomersRepository.getCustomersSummary');
@@ -83,28 +58,6 @@ class CustomersRepository {
         });
     }
 
-        // get a  customer
-        getCustomerByAuth(id, callback) {
-            console.log('*** CustomersRepository.getCustomerByAuth');
-            Customer.findOne( {'auth_id': id }, (err, customer) =>{
-                if (err) { 
-                    console.log(`*** CustomersRepository.getCustomerByAuth error: ${err}`); 
-                    return callback(err); 
-                }
-                callback(null, customer);
-            } );
-        }
-        // get a  customer
-        getCustomerByEmail(email, callback) {
-            console.log('*** CustomersRepository.getCustomerByEmail');
-            Customer.findOne( {'email': email.toLowerCase() }, (err, customer) =>{
-                if (err) { 
-                    console.log(`*** CustomersRepository.getCustomerByEmail error: ${err}`); 
-                    return callback(err); 
-                }
-                callback(null, customer);
-            } );
-        }
 
     // insert a  customer
     insertCustomer(body, callback) {
@@ -112,16 +65,12 @@ class CustomersRepository {
         let customer = new Customer();
 
         customer._id = new mongoose.Types.ObjectId();
-        customer.first_name = body.first_name;
-        customer.last_name = body.last_name;
-        customer.email = body.email.toLowerCase();
+        customer.user = customer.userId;
         customer.phone_number = body.phone_number;
         customer.address = body.address;
         customer.city = body.city;
         customer.state = body.state;
         customer.zip_code = body.zip_code;
-        customer.countDocumentsry = body.countDocumentsry;
-        customer.auth_id = body.auth_id
         customer.payment_host_id = body.payment_host_id;
 
         customer.save((err, customer) => {
@@ -143,16 +92,11 @@ class CustomersRepository {
                 return callback(err); 
             }
 
-            customer.first_name = body.first_name || customer.first_name;
-            customer.last_name = body.last_name || customer.last_name;
-            customer.email = body.email.toLowerCase() || customer.email;
             customer.phone_number = body.phone_number || customer.phone_number;
             customer.address = body.address || customer.address;
             customer.city = body.city || customer.city;
             customer.state = body.state || customer.state;
             customer.zip_code = body.zip_code || customer.zip_code;
-            customer.countDocumentsry = body.countDocumentsry || customer.countDocumentsry;
-            customer.auth_id = body.auth_id || customer.auth_id;
             customer.payment_host_id = body.payment_host_id || customer.payment_host_id;
 
 

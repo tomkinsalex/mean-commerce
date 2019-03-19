@@ -5,7 +5,6 @@ class ItemTypesController {
 
     constructor(router) {
         router.get('/', this.getItemTypes.bind(this));
-        router.get('/page/:skip/:top', this.getItemTypesPage.bind(this));
         router.get('/:id', this.getItemType.bind(this));
         router.post('/', this.insertItemType.bind(this));
         router.put('/:id', this.updateItemType.bind(this));
@@ -20,25 +19,6 @@ class ItemTypesController {
                 res.json(null);
             } else {
                 console.log('*** getItemTypes ok');
-                res.json(data.itemtypes);
-            }
-        });
-    }
-
-    getItemTypesPage(req, res) {
-        console.log('*** getItemTypesPage');
-        const topVal = req.params.top,
-              skipVal = req.params.skip,
-              top = (isNaN(topVal)) ? 10 : +topVal,
-              skip = (isNaN(skipVal)) ? 0 : +skipVal;
-
-        itemtypesRepo.getPagedItemTypes(skip, top, (err, data) => {
-            res.setHeader('X-InlineCount', data.count);
-            if (err) {
-                console.log('*** getItemTypesPage error: ' + util.inspect(err));
-                res.json(null);
-            } else {
-                console.log('*** getItemTypesPage ok');
                 res.json(data.itemtypes);
             }
         });

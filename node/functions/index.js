@@ -9,7 +9,8 @@ const express       = require('express'),
     database        = require('./lib/database'),
     seeder          = require('./lib/dbSeeder'),
     app             = express(),
-    helmet          = require('helmet');
+    helmet          = require('helmet'),
+    cors            = require('cors');
 
 class Server {
 
@@ -23,7 +24,7 @@ class Server {
 
     start() {
         app.listen();
-        console.log("Hi");
+        console.log("Hi, were in " + process.env.NODE_ENV +" mode");
     }
 
 
@@ -35,24 +36,15 @@ class Server {
         app.use(bodyParser.json());
         app.use(errorhandler());
         app.use(cookieParser());
-        app.use(csrf({ cookie: true }));
-        
-        
-        var allowCrossDomain = function(req, res, next) {
-            res.header('Access-Control-Allow-Origin', "*");
-            res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-            res.header('Access-Control-Allow-Headers', 'Content-Type');
-            next();
-        }
-        app.use(allowCrossDomain);
-
+        app.use(cors());
+       // app.use(csrf({ cookie: true }));   
   
-        app.use((req, res, next) => {
+       /*  app.use((req, res, next) => {
             let csrfToken = req.csrfToken();
             res.locals._csrf = csrfToken;
             res.cookie('XSRF-TOKEN', csrfToken);
             next();
-        }); 
+        });  */
 
          process.on('uncaughtException', (err) => {
             if (err) console.log(err, err.stack);

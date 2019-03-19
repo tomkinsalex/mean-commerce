@@ -45,52 +45,7 @@ class ItemsRepository {
 
         });
     }
-    /*
-    getPagedItems(skip, top, callback) {
-        console.log('*** ItemsRepository.getPagedItems');
-        Item.countDocuments((err, itemsCount) => {
-            let count = itemsCount;
-            console.log(`Skip: ${skip} Top: ${top}`);
-            console.log(`Items count: ${count}`);
-
-            Item.find({})
-                    .sort({lastName: 1})
-                    .skip(skip)
-                    .limit(top)
-                    .exec((err, Items) => {
-                        if (err) { 
-                            console.log(`*** ItemsRepository.getPagedItems error: ${err}`); 
-                            return callback(err); 
-                        }
-                        callback(null, {
-                            count: count,
-                            Items: Items
-                        });
-                    });
-
-        });
-    }
-    
-    // get the Item summary
-    getItemsSummary(skip, top, callback) {
-        console.log('*** ItemsRepository.getItemsSummary');
-        Item.countDocuments((err, itemsCount) => {
-            let count = itemsCount;
-            console.log(`Items count: ${count}`);
-
-            Item.find({}, { '_id': 0, 'firstName': 1, 'lastName': 1, 'city': 1, 'state': 1, 'orderCount': 1, 'gender': 1 })
-                    .skip(skip)
-                    .limit(top)
-                    .exec((err, ItemsSummary) => {
-                        callback(null, {
-                            count: count,
-                            ItemsSummary: ItemsSummary
-                        });
-                    });
-
-        });
-    }
-    */
+   
     // get a  Item
     getItem(id, callback) {
         console.log('*** ItemsRepository.getItem');

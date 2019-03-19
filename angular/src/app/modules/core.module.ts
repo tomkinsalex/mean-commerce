@@ -3,8 +3,10 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import {
   CartService, ItemDataService, StorageService, LocalStorageService, DeliveryOptionsDataService,
   OrderDataService, OrderItemDataService, ItemTypeDataService,
-  CustomerDataService, PaymentDataService, ShipmentDataService, AuthService, UserService, UiLoadingService, ApiAuthService
+  CustomerDataService, PaymentDataService, ShipmentDataService, AuthService, UiLoadingService
 } from '@/services';
+
+import { UserService } from '@/services/user.service';
 
 import { AuthGuard, PopulatedCartRouteGuard } from '@/route-guards';
 import { UserResolver, ItemsResolver } from '@/resolvers';
@@ -19,7 +21,6 @@ import { EnsureModuleLoadedOnceGuard } from '@/shared';
 
   ],
   providers: [
-    ApiAuthService,
     AuthService,
     UserService,
     UserResolver,

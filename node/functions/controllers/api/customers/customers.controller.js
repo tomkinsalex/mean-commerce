@@ -5,10 +5,7 @@ class CustomersController {
 
     constructor(router) {
         router.get('/', this.getCustomers.bind(this));
-        router.get('/page/:skip/:top', this.getCustomersPage.bind(this));
         router.get('/:id', this.getCustomer.bind(this));
-        router.get('/auth/:authid', this.getCustomerByAuth.bind(this));
-        router.get('/email/:email', this.getCustomerByEmail.bind(this));
         router.post('/', this.insertCustomer.bind(this));
         router.put('/:id', this.updateCustomer.bind(this));
         router.delete('/:id', this.deleteCustomer.bind(this));
@@ -27,29 +24,9 @@ class CustomersController {
         });
     }
 
-    getCustomersPage(req, res) {
-        console.log('*** getCustomersPage');
-        const topVal = req.params.top,
-              skipVal = req.params.skip,
-              top = (isNaN(topVal)) ? 10 : +topVal,
-              skip = (isNaN(skipVal)) ? 0 : +skipVal;
-
-        customersRepo.getPagedCustomers(skip, top, (err, data) => {
-            res.setHeader('X-InlineCount', data.count);
-            if (err) {
-                console.log('*** getCustomersPage error: ' + util.inspect(err));
-                res.json(null);
-            } else {
-                console.log('*** getCustomersPage ok');
-                res.json(data.customers);
-            }
-        });
-    }
-
     getCustomer(req, res) {
         console.log('*** getCustomer');
         const id = req.params.id;
-        console.log(id);
 
         customersRepo.getCustomer(id, (err, customer) => {
             if (err) {
@@ -57,36 +34,6 @@ class CustomersController {
                 res.json(null);
             } else {
                 console.log('*** getCustomer ok');
-                res.json(customer);
-            }
-        });
-    }
-    getCustomerByAuth(req, res) {
-        console.log('*** getCustomerByAuth');
-        const id = req.params.authid;
-        console.log(id);
-
-        customersRepo.getCustomerByAuth(id, (err, customer) => {
-            if (err) {
-                console.log('*** getCustomerByAtuh error: ' + util.inspect(err));
-                res.json(null);
-            } else {
-                console.log('*** getCustomerByAuth ok');
-                res.json(customer);
-            }
-        });
-    }
-    getCustomerByEmail(req, res) {
-        console.log('*** getCustomerByEmail');
-        const email = req.params.email;
-        console.log(email);
-
-        customersRepo.getCustomerByEmail(email, (err, customer) => {
-            if (err) {
-                console.log('*** getCustomerByEmail error: ' + util.inspect(err));
-                res.json(null);
-            } else {
-                console.log('*** getCustomerByEmail ok');
                 res.json(customer);
             }
         });

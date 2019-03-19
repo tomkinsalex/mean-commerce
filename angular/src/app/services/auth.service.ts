@@ -1,85 +1,86 @@
 import { Injectable } from "@angular/core";
-import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import * as moment from "moment";
+
+import { IAuthResponse, IUser } from '@/model';
+import { UserService } from '@/services/user.service';
 
 @Injectable()
 export class AuthService {
 
-  constructor(private afAuth: AngularFireAuth) { }
+  private LS_EXPIRES: string = "expires_at";
+  private LS_TOKEN: string = "token_id";
+  private LS_USER: string = "user_id";
 
-  doFacebookLogin(): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      let provider = new firebase.auth.FacebookAuthProvider();
-      this.afAuth.auth
-        .signInWithPopup(provider)
-        .then(res => {
-          resolve(res);
-        }, err => {
-          console.log(err);
-          reject(err);
-        })
-    })
+
+  constructor(private userService: UserService) { }
+
+  public getToken(): string {
+    return localStorage.getItem(this.LS_TOKEN);
   }
 
-  doTwitterLogin(): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      let provider = new firebase.auth.TwitterAuthProvider();
-      this.afAuth.auth
-        .signInWithPopup(provider)
-        .then(res => {
-          resolve(res);
-        }, err => {
-          console.log(err);
-          reject(err);
-        })
-    })
+  public getCurrentUser(): Observable<IUser> {
+    let user: string = localStorage.getItem(this.LS_USER);
+
+    if (typeof user === 'undefined' || user == null || user === null) {
+      return null;
+    }
+
+    if (this.isLoggedIn()) {
+      return this.userService.getUser(user);
+    } else {
+      this.logout();
+    }
   }
 
-  doGoogleLogin(): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      let provider = new firebase.auth.GoogleAuthProvider();
-      provider.addScope('profile');
-      provider.addScope('email');
-      this.afAuth.auth
-        .signInWithPopup(provider)
-        .then(res => {
-          resolve(res);
-        }, err => {
-          console.log(err);
-          reject(err);
-        })
-    })
+  register(user: IUser): Observable<IAuthResponse> {
+    return this.userService.register(user)
+      .pipe(map((resp: IAuthResponse) => {
+        if (resp.status) {
+          this.setSession(resp);
+        }
+        return resp;
+      }));
   }
 
-  doRegister(value): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
-        .then(res => {
-          resolve(res);
-        }, err => reject(err))
-    })
+  login(user: IUser): Observable<IAuthResponse> {
+    return this.userService.login(user)
+      .pipe(map((resp: IAuthResponse) => {
+        if (resp.status) {
+          this.setSession(resp);
+        }
+        return resp;
+      }));
   }
 
-  doLogin(value): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      firebase.auth().signInWithEmailAndPassword(value.email, value.password)
-        .then(res => {
-          resolve(res);
-        }, err => reject(err))
-    })
+  private setSession(authResult: IAuthResponse): void {
+    const expiresAt = moment().add(authResult.expires, 'second');
+
+    localStorage.setItem(this.LS_TOKEN, authResult.token);
+    localStorage.setItem(this.LS_EXPIRES, JSON.stringify(expiresAt.valueOf()));
+    localStorage.setItem(this.LS_USER, authResult.user_id);
   }
 
-  doLogout(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (firebase.auth().currentUser) {
-        this.afAuth.auth.signOut()
-        resolve();
-      }
-      else {
-        reject();
-      }
-    });
+  logout(): void {
+    localStorage.removeItem(this.LS_TOKEN);
+    localStorage.removeItem(this.LS_EXPIRES);
+    localStorage.removeItem(this.LS_USER);
   }
 
+  public isLoggedIn(): boolean {
+    //return moment().isBefore(this.getExpiration());
+    return true;
+  }
+
+  public isLoggedOut(): boolean {
+    return !this.isLoggedIn();
+  }
+
+  private getExpiration() {
+    const expiration = localStorage.getItem(this.LS_EXPIRES);
+    const expiresAt = JSON.parse(expiration);
+    return moment(expiresAt);
+  }
 
 }

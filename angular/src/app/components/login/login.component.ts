@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MatDialogRef } from "@angular/material";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { IAuthResponse, IUser } from '@/model';
 import { AuthService } from '@/services'
 
 @Component({
@@ -35,13 +36,19 @@ export class LoginComponent {
   }
 
   tryLogin(value) {
-    this.authService.doLogin(value)
-      .then(res => {
+
+    let user: IUser = {
+      email : value.email,
+      password: value.password
+    }
+
+    this.authService.login(user).subscribe( (resp: IAuthResponse) => {
+      if(resp.status){
         this.router.navigate(['/user']);
         this.thisDialogRef.close();
-      }, err => {
-        console.log(err);
-        this.errorMessage = err.message;
-      })
+      }else{
+        this.errorMessage = resp.error;
+      }
+    })
   }
 }

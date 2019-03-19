@@ -1,34 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, Router } from "@angular/router";
 
-import { UserService, CustomerDataService } from '@/services';
-import { MUser, ICustomer } from '@/model';
+import { AuthService } from '@/services';
+import { IUser } from '@/model';
 
 @Injectable()
-export class UserResolver implements Resolve<MUser> {
+export class UserResolver implements Resolve<IUser> {
 
-  constructor(private userService: UserService, private router: Router, private customerService: CustomerDataService) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
-  resolve(route: ActivatedRouteSnapshot): Promise<MUser> {
-
-    let user = new MUser();
-
+  resolve(route: ActivatedRouteSnapshot): Promise<IUser> {
+    let user: IUser = {};
     return new Promise((resolve, reject) => {
-      this.userService.getCurrentUser()
-        .then(res => {
-          user.email = res.email;
-          user.uid = res.uid;
-          this.customerService.getCustomerByAuth(user.uid)
-            .subscribe((customer: ICustomer) => {
-              user.customer = customer;
-            }, (err: any) => { console.log(err) },
-              () => {
-                return resolve(user);
-              }
-            );
-        }).catch((res) => {
-          return resolve(null);
-        });
+      let obs = this.authService.getCurrentUser();
+      if (obs) {
+        obs.subscribe((resp: IUser) => {
+          user = resp;
+        },
+          (err: any) => console.log(err),
+          () => {
+            console.log(user + "this is the user complete");
+            return resolve(user);
+          })
+      }else{
+        console.log(user + "this is null");
+        return resolve(null);
+      }
     })
+
   }
 }

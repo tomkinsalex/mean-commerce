@@ -126,9 +126,6 @@ export class CheckoutFormDataService {
 
     private sendOrderToDb(): Observable<any> {
         return this.customerDataService.insertCustomer({
-            first_name: this.formData.customer.firstName,
-            last_name: this.formData.customer.lastName,
-            email: this.formData.customer.email,
             phone_number: parseInt(this.formData.customer.phoneNumber.replace(/\D/g, '')),
             address: this.formData.customer.address.street,
             city: this.formData.customer.address.city,
