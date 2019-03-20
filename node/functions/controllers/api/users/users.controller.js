@@ -1,9 +1,13 @@
-const   userRepo = require('../../../lib/usersRepository'),
-        util = require('util');
+const userRepo = require('../../../lib/usersRepository'),
+    token = require('../../../lib/token'),
+    util = require('util'),
+    verifyTokenMW   = require('../../../lib/tokenMiddleware');
 
 class UsersController {
 
     constructor(router) {
+        router.get('*', verifyTokenMW);
+
         router.get('/:id', this.getUser.bind(this));
         router.post('/register', this.register.bind(this));
         router.post('/login', this.login.bind(this));
@@ -14,10 +18,20 @@ class UsersController {
         userRepo.login(req.body, (err, data) => {
             if (err) {
                 console.log('*** login error: ' + util.inspect(err));
-                res.json({status: false, error: err.message, user_id: null});
+                res.json({ 
+                    status: false, 
+                    error: err.message, 
+                });
+
             } else {
                 console.log('*** login response ok');
-                res.json({status: true, error: null, user_id: data});
+                res.json({
+                    status: true,
+                    token: token.create({
+                        sessionData: data,
+                        maxAge: 3600
+                    })
+                });
             }
         });
     }
@@ -27,10 +41,20 @@ class UsersController {
         userRepo.register(req.body, (err, data) => {
             if (err) {
                 console.log('*** register error: ' + util.inspect(err));
-                res.json({status: false, error: err.message, user_id: null});
+                res.json({ 
+                    status: false, 
+                    error: err.message
+                });
+
             } else {
                 console.log('*** register ok');
-                res.json({status: true, error: null, user_id: data});
+                res.json({ 
+                    status: true, 
+                    token: token.create({
+                        sessionData: data,
+                        maxAge: 3600
+                    })
+                });
             }
         });
     }

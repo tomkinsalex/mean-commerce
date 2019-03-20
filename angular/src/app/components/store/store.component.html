@@ -3,10 +3,10 @@
     <span>E-Commerce App</span>
 
     <span class="example-spacer"></span>
-    <div *ngIf="user === null">
+    <div *ngIf="!loggedIn">
       <button mat-button (click)="openLogin()">Login</button>
     </div>
-    <div *ngIf="user !== null">
+    <div *ngIf="loggedIn">
       <button mat-button [routerLink]="['/user']">Account</button>
     </div>
     <button mat-button (click)="openCart()">Cart <i class="fas fa-shopping-cart"></i></button>

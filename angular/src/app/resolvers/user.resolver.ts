@@ -13,17 +13,20 @@ export class UserResolver implements Resolve<IUser> {
     let user: IUser = {};
     return new Promise((resolve, reject) => {
       let obs = this.authService.getCurrentUser();
-      if (obs) {
+       if (obs) {
         obs.subscribe((resp: IUser) => {
           user = resp;
+          console.log(user);
         },
-          (err: any) => console.log(err),
+          (err: any) => {
+            this.router.navigate(['/']);
+            this.authService.logout();
+            return resolve(null);
+          },
           () => {
-            console.log(user + "this is the user complete");
             return resolve(user);
           })
       }else{
-        console.log(user + "this is null");
         return resolve(null);
       }
     })

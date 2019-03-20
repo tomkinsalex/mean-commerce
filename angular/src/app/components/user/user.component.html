@@ -4,7 +4,7 @@
 
     <span class="user-spacer"></span>
     <a mat-button [routerLink]="['/store']">Store</a>
-    <button mat-button (click)="logout()">Logout</button>
+    <button mat-button (click)="logout()">{{user.first_name}} logout</button>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-sidenav-container class="user-container">

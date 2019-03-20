@@ -1,12 +1,13 @@
 const ordersRepo = require('../../../lib/ordersRepository'),
-      util = require('util');
+      util = require('util'),
+      verifyTokenMW   = require('../../../lib/tokenMiddleware');
 
 class OrdersController {
 
     constructor(router) {
+        router.all('*', verifyTokenMW);
+
         router.get('/', this.getOrders.bind(this));
-        router.get('/page/:skip/:top', this.getOrdersPage.bind(this));
-        router.get('/invoice/', this.findLatestInvoice.bind(this));
         router.get('/:id', this.getOrder.bind(this));
         router.post('/', this.insertOrder.bind(this));
         router.put('/:id', this.updateOrder.bind(this));
@@ -21,25 +22,6 @@ class OrdersController {
                 res.json(null);
             } else {
                 console.log('*** getOrders ok');
-                res.json(data.orders);
-            }
-        });
-    }
-
-    getOrdersPage(req, res) {
-        console.log('*** getOrdersPage');
-        const topVal = req.params.top,
-              skipVal = req.params.skip,
-              top = (isNaN(topVal)) ? 10 : +topVal,
-              skip = (isNaN(skipVal)) ? 0 : +skipVal;
-
-        ordersRepo.getPagedOrders(skip, top, (err, data) => {
-            res.setHeader('X-InlineCount', data.count);
-            if (err) {
-                console.log('*** getOrdersPage error: ' + util.inspect(err));
-                res.json(null);
-            } else {
-                console.log('*** getOrdersPage ok');
                 res.json(data.orders);
             }
         });
@@ -99,20 +81,6 @@ class OrdersController {
             } else {
                 console.log('*** deleteOrder ok');
                 res.json({ status: true });
-            }
-        });
-    }
-
-    findLatestInvoice(req, res) {
-        console.log('*** findLatestInvoice');
-
-        ordersRepo.findLatestInvoice((err, invoiceNumber) => {
-            if (err) {
-                console.log('*** findLatestInvoice error: ' + util.inspect(err));
-                res.json(null);
-            } else {
-                console.log('*** findLatestInvoice ok');
-                res.json(invoiceNumber);
             }
         });
     }

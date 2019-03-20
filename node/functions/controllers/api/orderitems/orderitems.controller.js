@@ -1,12 +1,14 @@
 const orderitemsRepo = require('../../../lib/orderitemsRepository'),
-      util = require('util');
+      util = require('util'),
+      verifyTokenMW   = require('../../../lib/tokenMiddleware');
 
 class OrderItemsController {
 
     constructor(router) {
+        router.all('*', verifyTokenMW);
+
         router.get('/', this.getOrderItems.bind(this));
         router.get('/order/:id', this.getOrderItemsForOrder.bind(this));
-        router.get('/page/:skip/:top', this.getOrderItemsPage.bind(this));
         router.get('/:id', this.getOrderItem.bind(this));
         router.post('/', this.insertOrderItem.bind(this));
         router.put('/:id', this.updateOrderItem.bind(this));
@@ -40,25 +42,6 @@ class OrderItemsController {
             }
         });
     }   
-
-    getOrderItemsPage(req, res) {
-        console.log('*** getOrderItemsPage');
-        const topVal = req.params.top,
-              skipVal = req.params.skip,
-              top = (isNaN(topVal)) ? 10 : +topVal,
-              skip = (isNaN(skipVal)) ? 0 : +skipVal;
-
-        orderitemsRepo.getPagedOrderItems(skip, top, (err, data) => {
-            res.setHeader('X-InlineCount', data.count);
-            if (err) {
-                console.log('*** getOrderItemsPage error: ' + util.inspect(err));
-                res.json(null);
-            } else {
-                console.log('*** getOrderItemsPage ok');
-                res.json(data.orderitems);
-            }
-        });
-    }
 
     getOrderItem(req, res) {
         console.log('*** getOrderItem');

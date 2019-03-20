@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { AuthService } from '@/services';
-import { UserService } from '@/services/user.service';
+import { IUser } from '@/model';
 
 @Component({
   selector: 'page-user',
@@ -12,24 +11,18 @@ import { UserService } from '@/services/user.service';
 })
 export class UserComponent implements OnInit {
 
-  profileForm: FormGroup;
+  public user: IUser = {};
 
   constructor(
-    public userService: UserService,
-    public authService: AuthService,
+    private authService: AuthService,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
-    private router: Router
-
-  ) {
-
-  }
+    private router: Router) {}
 
   ngOnInit(): void {
     this.route.data.subscribe(routeData => {
       let data = routeData['data'];
       if (data) {
-        
+        this.user = data;
       }
     });
   }

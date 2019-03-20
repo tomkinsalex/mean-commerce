@@ -2,13 +2,13 @@ const dotEnv = require('dotenv');
 
 'use strict';
 
-if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'development';
-}
-
 dotEnv.config();
 
-const env = process.env.NODE_ENV;
+let env = process.env.NODE_ENV;
+
+if(!env){
+    env = "development";
+}
 
 console.log(`Node environment: ${env}`);
 console.log(`loading config.${env}.json`);

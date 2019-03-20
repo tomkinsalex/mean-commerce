@@ -64,6 +64,7 @@ class UsersRepository {
                 console.log(`*** UsersRepository.getUser error: ${err}`); 
                 return callback(err); 
             }
+            user.password = null;
             callback(null, user);
         });
     }

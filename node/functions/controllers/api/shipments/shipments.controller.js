@@ -1,9 +1,12 @@
-const shipmentsRepo = require('../../../lib/shipmentsRepository'),
-      util = require('util');
+const   shipmentsRepo = require('../../../lib/shipmentsRepository'),
+        util = require('util'),
+        verifyTokenMW   = require('../../../lib/tokenMiddleware');
 
 class ShipmentsController {
 
     constructor(router) {
+        router.all('*', verifyTokenMW);
+
         router.get('/', this.getShipments.bind(this));
         router.get('/page/:skip/:top', this.getShipmentsPage.bind(this));
         router.get('/:id', this.getShipment.bind(this));

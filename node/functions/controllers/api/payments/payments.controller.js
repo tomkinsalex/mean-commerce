@@ -1,11 +1,13 @@
 const paymentsRepo = require('../../../lib/paymentsRepository'),
-      util = require('util');
+      util = require('util'),
+      verifyTokenMW   = require('../../../lib/tokenMiddleware');
 
 class PaymentsController {
 
     constructor(router) {
+        router.all('*', verifyTokenMW);
+
         router.get('/', this.getPayments.bind(this));
-        router.get('/page/:skip/:top', this.getPaymentsPage.bind(this));
         router.get('/:id', this.getPayment.bind(this));
         router.post('/', this.insertPayment.bind(this));
         router.put('/:id', this.updatePayment.bind(this));
@@ -25,24 +27,6 @@ class PaymentsController {
         });
     }
 
-    getPaymentsPage(req, res) {
-        console.log('*** getPaymentsPage');
-        const topVal = req.params.top,
-              skipVal = req.params.skip,
-              top = (isNaN(topVal)) ? 10 : +topVal,
-              skip = (isNaN(skipVal)) ? 0 : +skipVal;
-
-        paymentsRepo.getPagedPayments(skip, top, (err, data) => {
-            res.setHeader('X-InlineCount', data.count);
-            if (err) {
-                console.log('*** getPaymentsPage error: ' + util.inspect(err));
-                res.json(null);
-            } else {
-                console.log('*** getPaymentsPage ok');
-                res.json(data.payments);
-            }
-        });
-    }
 
     getPayment(req, res) {
         console.log('*** getPayment');

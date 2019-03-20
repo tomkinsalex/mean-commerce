@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from "@angular/material";
-import { ActivatedRoute } from '@angular/router';
 
 import { LoginComponent } from '@/components/login';
 import { RegisterComponent } from '@/components/register';
 import { CartComponent } from '@/components/cart';
-import { IUser } from '@/model';
-
+import { AuthService } from '@/services';
 
 @Component({
   selector: 'app-store',
@@ -15,20 +13,14 @@ import { IUser } from '@/model';
 })
 export class StoreComponent implements OnInit {
 
-  public user: IUser = null;
+  public loggedIn: boolean;
 
   constructor(
     private dialog: MatDialog,
-    private route: ActivatedRoute
-    ) { }
+    private authService: AuthService ) { }
 
   ngOnInit() {
-    this.route.data.subscribe(routeData => {
-      let data = routeData['data'];
-      if (data) {
-        this.user = data;
-      }
-    })
+    this.loggedIn = this.authService.isLoggedIn();
   }
   
   openCart() {

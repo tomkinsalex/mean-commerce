@@ -1,9 +1,12 @@
 const customersRepo = require('../../../lib/customersRepository'),
-      util = require('util');
+      util = require('util'),
+      verifyTokenMW   = require('../../../lib/tokenMiddleware');
 
 class CustomersController {
 
     constructor(router) {
+        router.all('*', verifyTokenMW);
+
         router.get('/', this.getCustomers.bind(this));
         router.get('/:id', this.getCustomer.bind(this));
         router.post('/', this.insertCustomer.bind(this));

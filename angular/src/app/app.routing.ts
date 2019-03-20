@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
 
 import { StoreComponent, ItemComponent, MainComponent } from "@/components/store";
-import { UserResolver, ItemsResolver } from '@/resolvers';
+import { ItemsResolver } from '@/resolvers';
 
 import { AuthGuard, PopulatedCartRouteGuard } from "@/route-guards";
 import { IRouting } from '@/model';
@@ -10,7 +10,7 @@ import { IRouting } from '@/model';
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'store/main' },
   {
-    path: 'store', component: StoreComponent, resolve: { data: UserResolver }, children: [
+    path: 'store', component: StoreComponent, children: [
       { path: '', pathMatch: 'full', redirectTo: 'main' },
       { path: 'item/:id', component: ItemComponent },
       { path: 'main', component: MainComponent, resolve: { data: ItemsResolver } },
@@ -20,7 +20,7 @@ export const routes: Routes = [
     path: 'checkout', canActivate:[ PopulatedCartRouteGuard ], loadChildren: '@/modules/checkout.module#CheckoutModule'
   },
   {
-    path: 'user', loadChildren: '@/modules/user.module#UserModule'
+    path: 'user', canActivate:[ AuthGuard ], loadChildren: '@/modules/user.module#UserModule'
   },
   { path: '**', pathMatch: 'full', redirectTo: 'store/main' } //catch any unfound routes and redirect to home page
 ];

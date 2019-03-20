@@ -1,9 +1,14 @@
 const itemtypesRepo = require('../../../lib/itemtypesRepository'),
-      util = require('util');
+      util = require('util'),
+      verifyTokenMW   = require('../../../lib/tokenMiddleware');
 
 class ItemTypesController {
 
     constructor(router) {
+        router.put('*', verifyTokenMW);
+        router.post('*', verifyTokenMW);
+        router.delete('*', verifyTokenMW);
+
         router.get('/', this.getItemTypes.bind(this));
         router.get('/:id', this.getItemType.bind(this));
         router.post('/', this.insertItemType.bind(this));

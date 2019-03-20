@@ -9,7 +9,7 @@ import {
 import { UserService } from '@/services/user.service';
 
 import { AuthGuard, PopulatedCartRouteGuard } from '@/route-guards';
-import { UserResolver, ItemsResolver } from '@/resolvers';
+import { ItemsResolver } from '@/resolvers';
 
 import { RequestCache, RequestCacheWithMap } from '@/services';
 import { httpInterceptorProviders } from '@/http-interceptors/index';
@@ -23,7 +23,6 @@ import { EnsureModuleLoadedOnceGuard } from '@/shared';
   providers: [
     AuthService,
     UserService,
-    UserResolver,
     ItemsResolver,
     AuthGuard,
     CartService,

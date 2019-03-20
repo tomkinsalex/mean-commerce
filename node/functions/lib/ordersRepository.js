@@ -27,53 +27,6 @@ class OrdersRepository {
         });
     }
 
-    getPagedOrders(skip, top, callback) {
-        console.log('*** OrdersRepository.getPagedOrders');
-        Order.countDocuments((err, ordersCount) => {
-            let count = ordersCount;
-            console.log(`Skip: ${skip} Top: ${top}`);
-            console.log(`Orders count: ${count}`);
-
-            Order.find({})
-                    .populate('customer', 'first_name last_name email payment_host_id')
-                    .sort({date_placed: 4})
-                    .skip(skip)
-                    .limit(top)
-                    .exec((err, orders) => {
-                        if (err) { 
-                            console.log(`*** OrdersRepository.getPagedOrders error: ${err}`); 
-                            return callback(err); 
-                        }
-                        callback(null, {
-                            count: count,
-                            orders: orders
-                        });
-                    });
-
-        });
-    }
-
-    /* get the order summary
-    getOrdersSummary(skip, top, callback) {
-        console.log('*** OrdersRepository.getOrdersSummary');
-        Order.countDocuments((err, custsCount) => {
-            let count = custsCount;
-            console.log(`Orders count: ${count}`);
-
-            Order.find({}, { '_id': 0, 'firstName': 1, 'lastName': 1, 'city': 1, 'state': 1, 'orderCount': 1, 'gender': 1 })
-                    .skip(skip)
-                    .limit(top)
-                    .exec((err, ordersSummary) => {
-                        callback(null, {
-                            count: count,
-                            ordersSummary: ordersSummary
-                        });
-                    });
-
-        });
-    }
-    */
-
     // get a  order
     getOrder(id, callback) {
         console.log('*** OrdersRepository.getOrder');
@@ -150,23 +103,7 @@ class OrdersRepository {
             }
             callback(null, order);
         });
-    }
-
-        // Find Latest Invoice
-        findLatestInvoice(callback) {
-            console.log('*** OrdersRepository.findLatestInvoice');
-            Order.findOne()
-            .sort('-invoice_number')
-            .exec( (err, order) => {
-                if (err) { 
-                    console.log(`*** OrdersRepository.findLatestInvoice error: ${err}`); 
-                    return callback(err); 
-                }
-                console.log(order);
-                callback(null, order.invoice_number);
-            });
-        }
-    
+    }    
 
 }
 

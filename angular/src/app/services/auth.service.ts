@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from "moment";
+import * as jwt_decode from "jwt-decode";
 
 import { IAuthResponse, IUser } from '@/model';
 import { UserService } from '@/services/user.service';
@@ -20,6 +21,15 @@ export class AuthService {
     return localStorage.getItem(this.LS_TOKEN);
   }
 
+  private getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    }
+    catch (Error) {
+      return null;
+    }
+  }
+
   public getCurrentUser(): Observable<IUser> {
     let user: string = localStorage.getItem(this.LS_USER);
 
@@ -32,9 +42,10 @@ export class AuthService {
     } else {
       this.logout();
     }
+    return null;
   }
 
-  register(user: IUser): Observable<IAuthResponse> {
+  public register(user: IUser): Observable<IAuthResponse> {
     return this.userService.register(user)
       .pipe(map((resp: IAuthResponse) => {
         if (resp.status) {
@@ -44,7 +55,7 @@ export class AuthService {
       }));
   }
 
-  login(user: IUser): Observable<IAuthResponse> {
+  public login(user: IUser): Observable<IAuthResponse> {
     return this.userService.login(user)
       .pipe(map((resp: IAuthResponse) => {
         if (resp.status) {
@@ -55,22 +66,31 @@ export class AuthService {
   }
 
   private setSession(authResult: IAuthResponse): void {
-    const expiresAt = moment().add(authResult.expires, 'second');
+
+    let tokenInfo = this.getDecodedAccessToken(authResult.token);
+
+    const d = new Date(0);
+    d.setUTCSeconds(tokenInfo.exp);
+    const expiresAt = moment(d);
 
     localStorage.setItem(this.LS_TOKEN, authResult.token);
     localStorage.setItem(this.LS_EXPIRES, JSON.stringify(expiresAt.valueOf()));
-    localStorage.setItem(this.LS_USER, authResult.user_id);
+    localStorage.setItem(this.LS_USER, tokenInfo.data);
   }
 
-  logout(): void {
+  public logout(): void {
     localStorage.removeItem(this.LS_TOKEN);
     localStorage.removeItem(this.LS_EXPIRES);
     localStorage.removeItem(this.LS_USER);
   }
 
   public isLoggedIn(): boolean {
-    //return moment().isBefore(this.getExpiration());
-    return true;
+    let mom = this.getExpiration();
+    if (mom) {
+      return moment().isBefore(mom);
+    }
+    this.logout();
+    return false;
   }
 
   public isLoggedOut(): boolean {
@@ -79,8 +99,11 @@ export class AuthService {
 
   private getExpiration() {
     const expiration = localStorage.getItem(this.LS_EXPIRES);
-    const expiresAt = JSON.parse(expiration);
-    return moment(expiresAt);
+    if (expiration) {
+      const expiresAt = JSON.parse(expiration);
+      return moment(expiresAt);
+    }
+    return null;
   }
 
 }
