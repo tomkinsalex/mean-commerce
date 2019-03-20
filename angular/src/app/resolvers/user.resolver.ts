@@ -16,7 +16,6 @@ export class UserResolver implements Resolve<IUser> {
        if (obs) {
         obs.subscribe((resp: IUser) => {
           user = resp;
-          console.log(user);
         },
           (err: any) => {
             this.router.navigate(['/']);

@@ -26,6 +26,8 @@ export class RegisterComponent {
 
   createForm() {
     this.registerForm = this.fb.group({
+      first: ['', Validators.required],
+      last: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
@@ -34,6 +36,8 @@ export class RegisterComponent {
   tryRegister(value) {
 
     let user: IUser = {
+      first_name: value.first,
+      last_name: value.last,
       email: value.email,
       password: value.password
     }

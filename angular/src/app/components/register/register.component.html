@@ -4,6 +4,20 @@
     <div class="row">
       <div class="col">
         <mat-form-field class="full-width">
+          <input matInput type="text" formControlName="first" placeholder="First Name">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput type="text" formControlName="last" placeholder="Last Name">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
           <input matInput type="email" formControlName="email" placeholder="Email">
         </mat-form-field>
       </div>
@@ -19,7 +33,7 @@
       <label class="mat-error" role="alert">{{errorMessage}}</label>
     </div>
 
-    
+
     <div class="text-center">
       <button type="submit" (click)="tryRegister(registerForm.value)" mat-raised-button
         color="primary">Register</button>
