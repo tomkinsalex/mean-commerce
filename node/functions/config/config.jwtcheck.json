@@ -1,0 +1,50 @@
+{
+    "customers": {
+        "GET": true,
+        "POST": true,
+        "PUT": true,
+        "DELETE": true
+    },
+    "items": {
+        "GET": false,
+        "POST": true,
+        "PUT": true,
+        "DELETE": true
+    },
+    "itemtypes": {
+        "GET": false,
+        "POST": true,
+        "PUT": true,
+        "DELETE": true
+    },
+    "orderitems": {
+        "GET": true,
+        "POST": true,
+        "PUT": true,
+        "DELETE": true
+    },
+    "orders": {
+        "GET": true,
+        "POST": true,
+        "PUT": true,
+        "DELETE": true
+    },
+    "payments": {
+        "GET": true,
+        "POST": true,
+        "PUT": true,
+        "DELETE": true
+    },
+    "shipments": {
+        "GET": true,
+        "POST": true,
+        "PUT": true,
+        "DELETE": true
+    },
+    "users": {
+        "GET": true,
+        "POST": false,
+        "PUT": true,
+        "DELETE": true
+    }
+}

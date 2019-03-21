@@ -1,14 +1,9 @@
 const itemsRepo = require('../../../lib/itemsRepository'),
-      util = require('util'),
-      verifyTokenMW   = require('../../../lib/tokenMiddleware');
+      util = require('util');
 
 class ItemsController {
 
     constructor(router) {
-        router.post('*', verifyTokenMW);
-        router.put('*', verifyTokenMW);
-        router.delete('*', verifyTokenMW);
-
         router.get('/', this.getItems.bind(this));
         router.get('/type/:id', this.getItemsForType.bind(this));
         router.get('/:id', this.getItem.bind(this));

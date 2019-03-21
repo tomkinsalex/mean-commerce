@@ -1,12 +1,9 @@
 const ordersRepo = require('../../../lib/ordersRepository'),
-      util = require('util'),
-      verifyTokenMW   = require('../../../lib/tokenMiddleware');
+      util = require('util');
 
 class OrdersController {
 
     constructor(router) {
-        router.all('*', verifyTokenMW);
-
         router.get('/', this.getOrders.bind(this));
         router.get('/:id', this.getOrder.bind(this));
         router.post('/', this.insertOrder.bind(this));

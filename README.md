@@ -2,14 +2,9 @@
 
 A basic E-Commerce Application
 
-## Software Requirements To Run Locally
-
-* Node.js 6.10 or higher
-* MongoDB 3.2 or higher
-
 ### Running the Application Locally
 
-1. Install Node.js (6.10 or higher), MongoDB (3.2 or higher), Firebase CLI and Angular CLI
+1. Install Node.js, MongoDB, Firebase CLI and Angular CLI
 
     * Node.js: https://nodejs.org
     * MongoDB: https://docs.mongodb.com/manual/administration/install-community
@@ -27,15 +22,20 @@ A basic E-Commerce Application
 	* Select your new project
 	* `cd functions`
 	* `npm install`
-	* `cd ..`
-	* `firebase serve`
+	* `cp .env.sample .env`
 
-4. Execute the following commands to serve the Angular app: 
+5. Run this 3 times `node -e "console.log(require('crypto').randomBytes(32).toString('hex'));"` 
+
+6. Copy paste the values into node/functions/.env for JWT_SECRET_USER, JWT_SECRET_ADMIN, JWT_SECRET_GUEST
+
+7. To run Node API --> `firebase serve`
+
+8. Execute the following commands to serve the Angular app: 
 	
 	* `cd angular`
 	* `cp src/environments/environment.prod.example.ts src/environments/environment.prod.ts`
 	* `npm install`
 
-5. Run `ng serve`
+9. To run Angular App --> `ng serve`
 
-6. Browse to http://localhost:4200
+10. Browse to http://localhost:4200

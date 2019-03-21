@@ -75,7 +75,7 @@ export class AuthService {
 
     localStorage.setItem(this.LS_TOKEN, authResult.token);
     localStorage.setItem(this.LS_EXPIRES, JSON.stringify(expiresAt.valueOf()));
-    localStorage.setItem(this.LS_USER, tokenInfo.data);
+    localStorage.setItem(this.LS_USER, tokenInfo.id);
   }
 
   public logout(): void {

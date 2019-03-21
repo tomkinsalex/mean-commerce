@@ -16,7 +16,7 @@ class UsersRepository {
                 callback({ 'message': "User doesn't exist" });
             } else {
                 if (user.password === password) {
-                    callback(null, user._id);
+                    callback(null, user);
                 } else {
                     callback({ 'message': 'Password mismatch' });
                 }
@@ -48,7 +48,7 @@ class UsersRepository {
                             return callback(err, null);
                         }
 
-                        callback(null, user._id);
+                        callback(null, user);
                     });
 
                 }

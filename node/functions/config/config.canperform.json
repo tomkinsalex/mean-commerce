@@ -1,0 +1,154 @@
+{
+    "customers": {
+        "GETALL": false,
+        "GET": {
+            "GUEST": true,
+            "USER": true
+        },
+        "POST": {
+            "GUEST": true,
+            "USER": true
+        },
+        "PUT": {
+            "GUEST": false,
+            "USER": true
+        },
+        "DELETE": {
+            "GUEST": false,
+            "USER": true
+        }
+    },
+    "items": {
+        "GETALL": true,
+        "GET": {
+            "GUEST": true,
+            "USER": true
+        },
+        "POST": {
+            "GUEST": false,
+            "USER": false
+        },
+        "PUT": {
+            "GUEST": false,
+            "USER": false
+        },
+        "DELETE": {
+            "GUEST": false,
+            "USER": false
+        }
+    },
+    "itemtypes": {
+        "GETALL": true,
+        "GET": {
+            "GUEST": true,
+            "USER": true
+        },
+        "POST": {
+            "GUEST": false,
+            "USER": false
+        },
+        "PUT": {
+            "GUEST": false,
+            "USER": false
+        },
+        "DELETE": {
+            "GUEST": false,
+            "USER": false
+        }
+    },
+    "orderitems": {
+        "GETALL": false,
+        "GET": {
+            "GUEST": true,
+            "USER": true
+        },
+        "POST": {
+            "GUEST": true,
+            "USER": true
+        },
+        "PUT": {
+            "GUEST": false,
+            "USER": false
+        },
+        "DELETE": {
+            "GUEST": false,
+            "USER": false
+        }
+    },
+    "orders": {
+        "GETALL": false,
+        "GET": {
+            "GUEST": true,
+            "USER": true
+        },
+        "POST": {
+            "GUEST": true,
+            "USER": true
+        },
+        "PUT": {
+            "GUEST": false,
+            "USER": false
+        },
+        "DELETE": {
+            "GUEST": false,
+            "USER": false
+        }
+    },
+    "payments": {
+        "GETALL": false,
+        "GET": {
+            "GUEST": true,
+            "USER": true
+        },
+        "POST": {
+            "GUEST": true,
+            "USER": true
+        },
+        "PUT": {
+            "GUEST": false,
+            "USER": false
+        },
+        "DELETE": {
+            "GUEST": false,
+            "USER": false
+        }
+    },
+    "shipments": {
+        "GETALL": false,
+        "GET": {
+            "GUEST": true,
+            "USER": true
+        },
+        "POST": {
+            "GUEST": true,
+            "USER": true
+        },
+        "PUT": {
+            "GUEST": false,
+            "USER": false
+        },
+        "DELETE": {
+            "GUEST": false,
+            "USER": false
+        }
+    },
+    "users": {
+        "GETALL": false,
+        "GET": {
+            "GUEST": true,
+            "USER": true
+        },
+        "POST": {
+            "GUEST": true,
+            "USER": true
+        },
+        "PUT": {
+            "GUEST": false,
+            "USER": true
+        },
+        "DELETE": {
+            "GUEST": false,
+            "USER": true
+        }
+    }
+}

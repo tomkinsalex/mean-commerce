@@ -1,12 +1,9 @@
 const paymentsRepo = require('../../../lib/paymentsRepository'),
-      util = require('util'),
-      verifyTokenMW   = require('../../../lib/tokenMiddleware');
+      util = require('util');
 
 class PaymentsController {
 
     constructor(router) {
-        router.all('*', verifyTokenMW);
-
         router.get('/', this.getPayments.bind(this));
         router.get('/:id', this.getPayment.bind(this));
         router.post('/', this.insertPayment.bind(this));

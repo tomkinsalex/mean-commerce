@@ -10,7 +10,9 @@ const express       = require('express'),
     seeder          = require('./lib/dbSeeder'),
     app             = express(),
     helmet          = require('helmet'),
-    cors            = require('cors');
+    cors            = require('cors'),
+    tokenMW         = require('./lib/tokenMW'),
+    canPerformMW         = require('./lib/canPerformMW');
 
 class Server {
 
@@ -52,6 +54,9 @@ class Server {
     }
 
     initCustomMiddleware() {
+        app.use(tokenMW);
+        app.use(canPerformMW);
+
         if (process.platform === "win32") {
             require("readline").createInterface({
                 input: process.stdin,
