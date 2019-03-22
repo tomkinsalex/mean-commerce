@@ -1,6 +1,7 @@
 const mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    User = require('../models/user');
+    User = require('../models/user'),
+    passwordManager = require('./passwordManager');
 
 class UsersRepository {
 
@@ -15,11 +16,17 @@ class UsersRepository {
             if (!user) {
                 callback({ 'message': "User doesn't exist" });
             } else {
-                if (user.password === password) {
-                    callback(null, user);
-                } else {
-                    callback({ 'message': 'Password mismatch' });
-                }
+                passwordManager.checkPassword(user, password)
+                    .then((resp) => {
+                        if (resp) {
+                            callback(null, user);
+
+                        } else {
+                            callback({ 'message': 'Password mismatch' });
+                        }
+                    }).catch((err) =>{
+                        callback({ 'message': 'Server Error' });
+                    });
             }
         });
     }
@@ -42,27 +49,33 @@ class UsersRepository {
                     user.password = body.password;
                     user.role = "USER";
 
-                    user.save((err, user) => {
-                        if (err) {
-                            console.log(`*** UsersRepository saveUser error: ${err}`);
-                            return callback(err, null);
-                        }
-
-                        callback(null, user);
-                    });
-
+                    passwordManager.hashPassword(user)
+                        .then((resp) => {
+                            user = resp;
+                            user.save((err, user) => {
+                                if (err) {
+                                    console.log(`*** UsersRepository saveUser error: ${err}`);
+                                    return callback(err, null);
+                                }
+                                callback(null, user);
+                            });
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            callback({ 'message': "Server error" })
+                        });
                 }
             });
 
     }
-    
-     // get a  User
-     getUser(id, callback) {
+
+    // get a  User
+    getUser(id, callback) {
         console.log('*** UsersRepository.getUser');
         User.findById(id, (err, user) => {
-            if (err) { 
-                console.log(`*** UsersRepository.getUser error: ${err}`); 
-                return callback(err); 
+            if (err) {
+                console.log(`*** UsersRepository.getUser error: ${err}`);
+                return callback(err);
             }
             user.password = null;
             callback(null, user);
