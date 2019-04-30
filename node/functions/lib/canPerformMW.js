@@ -4,12 +4,10 @@ module.exports = function canPerformMW(req, res, next) {
     let role = req.role;
 
     let answer = false;
-    console.log(role);
     if (role) {
         if (role != "ADMIN") {
             let url = req.originalUrl.split('/');
             let route = canPerformJson[url[2]];
-            console.log(route);
             let method = req.method;
             if (method === "GET") {
                 if (route.GETALL) {

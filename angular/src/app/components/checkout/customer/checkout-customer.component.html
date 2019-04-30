@@ -3,43 +3,12 @@
     <br />
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm">
-                <mat-form-field class="full-width">
-                    <input matInput #firstname="ngModel" required id="firstname" name="firstname" type="text"
-                        placeholder="First Name" [(ngModel)]="customer.firstName">
-                    <mat-error class="error-message" [hidden]="firstname.valid">First Name is required</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field class="full-width">
-                    <input matInput #lastname="ngModel" required id="lastname" name="lastname" type="text" placeholder="Last Name"
-                        [(ngModel)]="customer.lastName">
-                    <mat-error class="error-message" [hidden]="lastname.valid">Last Name is required</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <mat-form-field class="full-width">
-                    <input matInput #email="ngModel" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" id="email" name="email"
-                        type="email" placeholder="Email" [(ngModel)]="customer.email">
-                    <mat-error class="error-message" [hidden]="email.valid">Email is required and must be valid</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field class="full-width">
-                    <input matInput #phonenumber="ngModel" required pattern="\d{3}[\-]\d{3}[\-]\d{4}" id="phonenumber"
-                        name="phonenumber" type="tel" placeholder="Phone Number" [(ngModel)]="customer.phoneNumber">
-                    <mat-error class="error-message" [hidden]="phonenumber.valid">Phone Number Format: 123-345-6789</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
             <div class="col">
                 <mat-form-field class="full-width">
-                    <input matInput #address="ngModel" required id="address" name="address" type="text" placeholder="Address"
-                        [(ngModel)]="customer.address.street">
-                    <mat-error class="error-message" [hidden]="address.valid">Address is required and must be valid</mat-error>
+                    <input matInput #address="ngModel" required id="address" name="address" type="text"
+                        placeholder="Address" [(ngModel)]="customer.address.street">
+                    <mat-error class="error-message" [hidden]="address.valid">Address is required and must be valid
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -48,13 +17,14 @@
                 <mat-form-field class="full-width">
                     <input matInput #city="ngModel" required id="city" name="city" type="text" placeholder="City"
                         [(ngModel)]="customer.address.city">
-                    <mat-error class="error-message" [hidden]="city.valid">City is required and must be valid</mat-error>
+                    <mat-error class="error-message" [hidden]="city.valid">City is required and must be valid
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="col-sm">
                 <mat-form-field class="full-width">
-                    <input matInput #zip="ngModel" required id="zip" name="zip" type="text" placeholder="Zip / Postal Code"
-                        [(ngModel)]="customer.address.zip">
+                    <input matInput #zip="ngModel" required id="zip" name="zip" type="text"
+                        placeholder="Zip / Postal Code" [(ngModel)]="customer.address.zip">
                     <mat-error class="error-message" [hidden]="zip.valid">Zip / Postal Code is required and must be
                         valid</mat-error>
                 </mat-form-field>
@@ -63,16 +33,27 @@
         <div class="row">
             <div class="col-sm">
                 <mat-form-field class="full-width">
-                    <input matInput #state="ngModel" required id="state" name="state" type="text" placeholder="State / Province"
-                        [(ngModel)]="customer.address.state">
-                    <mat-error class="error-message" [hidden]="state.valid">State is required and must be valid</mat-error>
+                    <input matInput #state="ngModel" required id="state" name="state" type="text"
+                        placeholder="State / Province" [(ngModel)]="customer.address.state">
+                    <mat-error class="error-message" [hidden]="state.valid">State is required and must be valid
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="col-sm">
                 <mat-form-field class="full-width">
-                    <input matInput #country="ngModel" required id="country" name="country" type="text" placeholder="Country"
-                        [(ngModel)]="customer.address.country">
+                    <input matInput #country="ngModel" required id="country" name="country" type="text"
+                        placeholder="Country" [(ngModel)]="customer.address.country">
                     <mat-error class="error-message" [hidden]="country.valid">Country is required</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <mat-form-field class="full-width">
+                    <input matInput #phonenumber="ngModel" required pattern="\d{3}[\-]\d{3}[\-]\d{4}" id="phonenumber"
+                        name="phonenumber" type="tel" placeholder="Phone Number" [(ngModel)]="customer.phoneNumber">
+                    <mat-error class="error-message" [hidden]="phonenumber.valid">Phone Number Format: 123-345-6789
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>

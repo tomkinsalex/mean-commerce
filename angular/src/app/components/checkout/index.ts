@@ -5,3 +5,4 @@ export * from './navbar/checkout-navbar.component';
 export * from './payment/checkout-payment.component';
 export * from './review/checkout-review.component';
 export * from './order/order.component';
+export * from './pre-checkout/pre-checkout.component';

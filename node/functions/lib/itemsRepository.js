@@ -65,7 +65,7 @@ class ItemsRepository {
         console.log(body);
 
         item._id = new mongoose.Types.ObjectId();
-        item.type_id = body.type_id;
+        item.item_type = body.item_type;
         item.title = body.title;
         item.name = body.name;
         item.price = body.price;
@@ -92,7 +92,7 @@ class ItemsRepository {
                 return callback(err); 
             }
 
-        item.type_id = body.type_id || item.type_id;
+        item.item_type = body.item_type || item.item_type;
         item.title = body.title || item.title;
         item.name = body.name || item.name;
         item.price = body.price || item.price;

@@ -1,16 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
-import { MaterialModule } from './material.module';
 import { UserRoutingModule } from '@/routers';
-
 import { ProfileComponent, OrdersComponent, UserComponent } from '@/components/user';
+import { SharedModule } from './shared.module';
 
 @NgModule({
-    imports: [CommonModule, UserRoutingModule, MaterialModule, FormsModule],
-    declarations: [ ProfileComponent, OrdersComponent, UserComponent
-    ],
+    imports: [ UserRoutingModule, SharedModule ],
+    declarations: [ ProfileComponent, OrdersComponent, UserComponent ],
     providers: [
     ]
 })

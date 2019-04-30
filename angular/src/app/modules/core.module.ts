@@ -14,8 +14,6 @@ import { ItemsResolver } from '@/resolvers';
 import { RequestCache, RequestCacheWithMap } from '@/services';
 import { httpInterceptorProviders } from '@/http-interceptors/index';
 
-import { EnsureModuleLoadedOnceGuard } from '@/shared';
-
 @NgModule({
   imports: [
 
@@ -28,29 +26,12 @@ import { EnsureModuleLoadedOnceGuard } from '@/shared';
     CartService,
     PopulatedCartRouteGuard,
     ItemDataService,
-    DeliveryOptionsDataService,
-    OrderDataService,
-    OrderItemDataService,
-    PaymentDataService,
-    ShipmentDataService,
     ItemTypeDataService,
     CustomerDataService,
     UiLoadingService,
     { provide: StorageService, useClass: LocalStorageService },
-    {
-      deps: [StorageService, ItemDataService, DeliveryOptionsDataService],
-      provide: CartService,
-      useClass: CartService
-    },
     { provide: RequestCache, useClass: RequestCacheWithMap },
     httpInterceptorProviders
   ]
 })
-export class CoreModule extends EnsureModuleLoadedOnceGuard {    //Ensure that CoreModule is only loaded into AppModule
-
-  //Looks for the module in the parent injector to see if it's already been loaded (only want it loaded once)
-  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
-    super(parentModule);
-  }
-
-}
+export class CoreModule { }

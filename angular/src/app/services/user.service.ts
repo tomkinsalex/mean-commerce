@@ -32,6 +32,15 @@ export class UserService {
         catchError(this.handleError));
   }
 
+  public createGuest(user: IUser): Observable<IAuthResponse> {
+    return this.http.post<IAuthResponse>(environment.baseUrl + this.baseUrl + '/guest', user)
+      .pipe(map((data) => {
+        //console.log('insertUser status: ' + data.status);
+        return data;
+      }),
+        catchError(this.handleError));
+  }
+
   public getUser(id: string): Observable<IUser> {
     //console.log('In user service, id is ' + id);
     return this.http.get<IUser>(environment.baseUrl + this.baseUrl + '/' + id)

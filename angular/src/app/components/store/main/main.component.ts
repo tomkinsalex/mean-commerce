@@ -41,7 +41,7 @@ export class MainComponent implements OnInit {
       const sub = this.cartService
         .get()
         .subscribe((cart) => {
-          obs.next(cart.items.some((i) => i.productId === item._id));
+          obs.next(cart.items.some((i) => i.id === item._id));
           obs.complete();
         });
       sub.unsubscribe();

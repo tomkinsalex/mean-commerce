@@ -12,7 +12,7 @@ class OrdersRepository {
             console.log(`Orders count: ${count}`);
 
             Order.find({})
-            .populate('customer', 'first_name last_name email payment_host_id')
+            .populate('customer', 'payment_host_id')
             .exec( (err, orders) => {
                 if (err) { 
                     console.log(`*** OrdersRepository.getOrders error: ${err}`); 
@@ -31,7 +31,7 @@ class OrdersRepository {
     getOrder(id, callback) {
         console.log('*** OrdersRepository.getOrder');
         Order.findById(id)
-        .populate('customer', 'first_name last_name email payment_host_id')
+        .populate('customer', 'payment_host_id')
         .exec( (err, order) => {
             if (err) { 
                 console.log(`*** OrdersRepository.getOrder error: ${err}`); 

@@ -1,18 +1,18 @@
-import { IDeliveryOption} from "./interfaces";
-import { MCartItem } from "./cart-item.model";
+import { IDeliveryOption, IUser, Role } from "./interfaces";
+import { ICartItem } from '.';
 
 export class MCheckoutFormData {
-    customer: MCustomer ;
-    paymentInfo: MPaymentInfo ;
-    orderInfo: MOrderInfo ;
-    
-    constructor(){
+    customer: MCustomer;
+    paymentInfo: MPaymentInfo;
+    orderInfo: MOrderInfo;
+
+    constructor() {
         this.customer = new MCustomer();
         this.paymentInfo = new MPaymentInfo();
         this.orderInfo = new MOrderInfo();
     }
 
-    test(): void{
+    test(): void {
         this.customer.test();
         this.paymentInfo.test();
         this.orderInfo.test();
@@ -22,29 +22,29 @@ export class MCheckoutFormData {
         this.customer = new MCustomer();
         this.paymentInfo = new MPaymentInfo();
         this.orderInfo = new MOrderInfo();
-        
+
     }
 }
 
 export class MCustomer {
-    firstName: string;
-    lastName : string;
-    email: string;
+    id: string;
+    user: IUser;
     phoneNumber: string;
     address: MAddress;
 
-    constructor(){
-        this.firstName = '';
-        this.lastName = '';
-        this.email = '';
+    constructor() {
+        this.id = null;
+        this.user = {
+            _id: '',
+            first_name: '',
+            last_name: '',
+            email: '',
+        }
         this.phoneNumber = '';
         this.address = new MAddress();
     }
 
-    test(): void{
-        this.firstName = 'John';
-        this.lastName = 'Smith';
-        this.email = 'email@email.com';
+    test(): void {
         this.phoneNumber = '613-456-7898';
         this.address.test();
     }
@@ -57,33 +57,33 @@ export class MAddress {
     zip: string = '';
     country: string = '';
 
-    constructor(){
-    this.street= '';
-    this.city= '';
-    this.state= '';
-    this.zip= '';
-    this.country= '';
+    constructor() {
+        this.street = '';
+        this.city = '';
+        this.state = '';
+        this.zip = '';
+        this.country = '';
     }
 
     //testing
-    test(): void{
-        this.street= 'Street';
-        this.city= 'City';
-        this.state= 'ST';
-        this.zip= '56265';
-        this.country= 'US';
-        }
+    test(): void {
+        this.street = 'Street';
+        this.city = 'City';
+        this.state = 'ST';
+        this.zip = '56265';
+        this.country = 'US';
+    }
 }
 
 export class MPaymentInfo {
-    nameOnCard: string ;
+    nameOnCard: string;
     creditCard: number;
-    cvc: number ;
-    expiryMonth: number ;
-    expiryYear: number ;
-    billingAddress: MAddress ;
+    cvc: number;
+    expiryMonth: number;
+    expiryYear: number;
+    billingAddress: MAddress;
 
-    constructor(){
+    constructor() {
         this.nameOnCard = '';
         this.creditCard = null;
         this.cvc = null;
@@ -92,7 +92,7 @@ export class MPaymentInfo {
         this.billingAddress = new MAddress();
     }
 
-    test(): void{
+    test(): void {
         this.nameOnCard = 'John Doe';
         this.creditCard = 1000;
         this.cvc = 111;
@@ -105,7 +105,7 @@ export class MPaymentInfo {
 
 export class MOrderInfo {
     deliveryOption: IDeliveryOption;
-    orderItems: MOrderItem[];
+    cartItems: ICartItem[];
     sub_total: number;
     total: number;
 
@@ -116,7 +116,7 @@ export class MOrderInfo {
             description: '',
             price: 0
         };
-        this.orderItems = [new MOrderItem()];
+        this.cartItems = new Array();
     }
 
     //testing
@@ -126,22 +126,14 @@ export class MOrderInfo {
             name: "Express",
             description: "The quickest of the normal delivery service",
             price: 9.99
-          };
+        };
         this.total = 0;
         this.sub_total = 0;
-        this.orderItems = [new MOrderItem()];
+        this.cartItems = new Array();
     }
 
-    public calculateTotals(): void {
-        this.sub_total = 0;
-        this.orderItems.map( orderItem => {
-            this.sub_total += orderItem.cartItem.price * orderItem.cartItem.quantity;
-        });
+    public calculateTotal(): void {
         this.total = this.sub_total + this.deliveryOption.price;
     }
 }
 
-export class MOrderItem {
-    cartItem: MCartItem = new MCartItem();
-    maxQuantity: number = 0;
-}

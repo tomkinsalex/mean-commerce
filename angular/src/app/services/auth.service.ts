@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import * as moment from "moment";
 import * as jwt_decode from "jwt-decode";
 
-import { IAuthResponse, IUser } from '@/model';
+import { IAuthResponse, IUser, Role } from '@/model';
 import { UserService } from '@/services/user.service';
 
 @Injectable()
@@ -13,6 +13,7 @@ export class AuthService {
   private LS_EXPIRES: string = "expires_at";
   private LS_TOKEN: string = "token_id";
   private LS_USER: string = "user_id";
+  private LS_ROLE: string = "role";
 
 
   constructor(private userService: UserService) { }
@@ -37,7 +38,7 @@ export class AuthService {
       return null;
     }
 
-    if (this.isLoggedIn()) {
+    if (this.isntExpired()) {
       return this.userService.getUser(user);
     } else {
       this.logout();
@@ -65,6 +66,16 @@ export class AuthService {
       }));
   }
 
+  public createGuest(user: IUser): Observable<IAuthResponse> {
+    return this.userService.createGuest(user)
+      .pipe(map((resp: IAuthResponse) => {
+        if (resp.status) {
+          this.setSession(resp);
+        }
+        return resp;
+      }));
+  }
+
   private setSession(authResult: IAuthResponse): void {
 
     let tokenInfo = this.getDecodedAccessToken(authResult.token);
@@ -76,15 +87,29 @@ export class AuthService {
     localStorage.setItem(this.LS_TOKEN, authResult.token);
     localStorage.setItem(this.LS_EXPIRES, JSON.stringify(expiresAt.valueOf()));
     localStorage.setItem(this.LS_USER, tokenInfo.id);
+    localStorage.setItem(this.LS_ROLE, tokenInfo.role);
   }
 
   public logout(): void {
     localStorage.removeItem(this.LS_TOKEN);
     localStorage.removeItem(this.LS_EXPIRES);
     localStorage.removeItem(this.LS_USER);
+    localStorage.removeItem(this.LS_ROLE);
   }
 
   public isLoggedIn(): boolean {
+    let mom = this.getExpiration();
+    if (mom) {
+      if (this.getRole() !== Role.GUEST) {
+        return moment().isBefore(mom);
+      }
+      return false;
+    }
+    this.logout();
+    return false;
+  }
+
+  public isntExpired(): boolean {
     let mom = this.getExpiration();
     if (mom) {
       return moment().isBefore(mom);
@@ -104,6 +129,10 @@ export class AuthService {
       return moment(expiresAt);
     }
     return null;
+  }
+
+  private getRole() {
+    return localStorage.getItem(this.LS_ROLE);
   }
 
 }

@@ -1,0 +1,132 @@
+<div class="container">
+
+  <mat-card class="board">
+    <mat-card-content>
+      <h3>Please choose one of the following checkout options</h3>
+      <mat-radio-group>
+        <div *ngFor="let option of checkoutOptions">
+          <mat-radio-button value="{{option}}" (click)="setCheckoutOption(option)">
+            {{option}}
+          </mat-radio-button>
+        </div>
+      </mat-radio-group>
+      <!-- ***************** REGISTER ***************** -->
+      <div *ngIf="showRegister">
+        <form [formGroup]="registerForm">
+          <h3>Register</h3>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput type="text" formControlName="first" placeholder="First Name">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput type="text" formControlName="last" placeholder="Last Name">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput type="email" formControlName="email" placeholder="Email">
+                <mat-error *ngIf="r.email.errors">
+                    <mat-error *ngIf="r.email.errors.email">
+                      Please enter a valid email address
+                    </mat-error>
+                  </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input type="password" matInput formControlName="password" placeholder="Password">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="text-center">
+            <label class="mat-error" role="alert">{{errorMessage}}</label>
+          </div>
+          <div class="text-center">
+            <button type="submit" (click)="tryRegister(registerForm.value)" mat-raised-button
+              color="primary" [disabled]="registerForm.invalid">Checkout</button>
+          </div>
+        </form>
+      </div>
+      <!-- ***************** LOGIN ***************** -->
+      <div *ngIf="showLogin">
+        <form [formGroup]="loginForm">
+          <h3>Login</h3>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput type="email" formControlName="email" placeholder="Email">
+                <mat-error *ngIf="l.email.errors">
+                    <mat-error *ngIf="l.email.errors.email">
+                      Please enter a valid email address
+                    </mat-error>
+                  </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input type="password" matInput formControlName="password" placeholder="Password">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="text-center">
+            <label class="mat-error" role="alert">{{errorMessage}}</label>
+          </div>
+          <div class="text-center">
+            <button type="submit" (click)="tryLogin(loginForm.value)" mat-raised-button
+              color="primary" [disabled]="loginForm.invalid">Checkout</button>
+          </div>
+        </form>
+      </div>
+      <!-- ***************** GUEST ***************** -->
+      <div *ngIf="showGuest">
+        <form [formGroup]="guestForm">
+          <h3>Guest</h3>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput type="text" formControlName="first" placeholder="First Name">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput type="text" formControlName="last" placeholder="Last Name">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput type="email" formControlName="email" placeholder="Email">
+                <mat-error *ngIf="g.email.errors">
+                    <mat-error *ngIf="g.email.errors.email">
+                      Please enter a valid email address
+                    </mat-error>
+                  </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="text-center">
+            <label class="mat-error" role="alert">{{errorMessage}}</label>
+          </div>
+          <div class="text-center">
+            <button type="submit" (click)="tryGuest(guestForm.value)" mat-raised-button
+              color="primary" [disabled]="guestForm.invalid" >Checkout</button>
+          </div>
+        </form>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

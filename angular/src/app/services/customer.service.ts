@@ -29,14 +29,9 @@ export class CustomerDataService {
     .pipe(catchError(this.handleError));
   }
 
-  public getCustomerByAuth(authId: string): Observable<ICustomer> {
+  public getCustomerByUser(userId: string): Observable<ICustomer> {
     //console.log('In customer service, id is ' + id);
-    return this.http.get<ICustomer>(environment.baseUrl + this.baseUrl + '/auth/' + authId)
-    .pipe(catchError(this.handleError));
-  }
-  public getCustomerByEmail(email: string): Observable<ICustomer> {
-    //console.log('In customer service, id is ' + email);
-    return this.http.get<ICustomer>(environment.baseUrl + this.baseUrl + '/email/' + email)
+    return this.http.get<ICustomer>(environment.baseUrl + this.baseUrl + '/user/' + userId)
     .pipe(catchError(this.handleError));
   }
 

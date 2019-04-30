@@ -15,7 +15,8 @@ export class CheckoutCustomerComponent implements OnInit {
     public form: any;
     public customer: MCustomer;
 
-    constructor(private router: Router, private formDataService: CheckoutFormDataService) {
+    constructor(private router: Router,
+        private formDataService: CheckoutFormDataService) {
     }
 
     ngOnInit() {

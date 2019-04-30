@@ -8,6 +8,7 @@ class UsersController {
         router.get('/:id', this.getUser.bind(this));
         router.post('/register', this.register.bind(this));
         router.post('/login', this.login.bind(this));
+        router.post('/guest', this.guest.bind(this));
     }
 
     login(req, res) {
@@ -34,6 +35,26 @@ class UsersController {
     register(req, res) {
         console.log('*** register');
         userRepo.register(req.body, (err, user) => {
+            if (err) {
+                console.log('*** register error: ' + util.inspect(err));
+                res.json({ 
+                    status: false, 
+                    error: err.message
+                });
+
+            } else {
+                console.log('*** register ok');
+                res.json({ 
+                    status: true, 
+                    token: token.create(user)
+                });
+            }
+        });
+    }
+
+    guest(req, res) {
+        console.log('*** guest');
+        userRepo.guest(req.body, (err, user) => {
             if (err) {
                 console.log('*** register error: ' + util.inspect(err));
                 res.json({ 

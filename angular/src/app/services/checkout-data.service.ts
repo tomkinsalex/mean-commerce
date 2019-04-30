@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
 
 import {
     MCheckoutFormData, MCustomer, MPaymentInfo, MOrderInfo, MCheckoutSteps,
-    IOrder, ICustomer, IOrderItem
+    IOrder, ICustomer, IOrderItem, IUser
 } from '@/model';
 import { CheckoutFlowService } from './checkout-flow.service';
 import { OrderDataService } from './order.service';
@@ -15,9 +15,6 @@ import { ShipmentDataService } from './shipment.service';
 import { OrderItemDataService } from './orderitem.service';
 import { PaymentDataService } from './payment.service';
 import { CustomerDataService } from './customer.service';
-
-
-
 
 @Injectable()
 export class CheckoutFormDataService {
@@ -45,6 +42,20 @@ export class CheckoutFormDataService {
 
     public getCustomer(): MCustomer {
         return this.formData.customer;
+    }
+
+    public setUser(data: IUser): void {
+        this.formData.customer.user = data;
+    }
+
+    public setExistingCustomer(data: ICustomer): void {
+        this.formData.customer.id = data._id;
+        this.formData.customer.phoneNumber = data.phone_number;
+        this.formData.customer.address.street = data.address;
+        this.formData.customer.address.city = data.city;
+        this.formData.customer.address.country = data.country;
+        this.formData.customer.address.state = data.state;
+        this.formData.customer.address.zip = data.zip_code;
     }
 
     public setCustomer(data: MCustomer): void {
@@ -108,25 +119,73 @@ export class CheckoutFormDataService {
     }
 
     public submitOrder(): Observable<any> {
-        this.formData.orderInfo.calculateTotals();
+        this.formData.orderInfo.calculateTotal();
         return this.sendOrderToDb();
         // Send email feature to be added
     }
 
     private sendOrderItemsToDb(order: IOrder): Observable<IOrderItem>[] {
-        return this.formData.orderInfo.orderItems.map((orderItem) => {
+        return this.formData.orderInfo.cartItems.map((orderItem) => {
             //console.log(orderItem);
             return this.orderitemDataService.insertOrderItem({
-                item: { _id: orderItem.cartItem.productId },
+                item: { _id: orderItem.id },
                 order: { _id: order._id },
-                price: orderItem.cartItem.price
+                price: orderItem.price
             });
         });
     }
 
     private sendOrderToDb(): Observable<any> {
+        if(this.formData.customer.id){
+            return this.existingCustomerSend();
+        }
+        return this.noCustomerSend();
+    }
+
+    private noCustomerSend(): Observable<any> {
         return this.customerDataService.insertCustomer({
-            phone_number: parseInt(this.formData.customer.phoneNumber.replace(/\D/g, '')),
+            user: { _id: this.formData.customer.user._id },
+            phone_number: this.formData.customer.phoneNumber,
+            address: this.formData.customer.address.street,
+            city: this.formData.customer.address.city,
+            state: this.formData.customer.address.state,
+            zip_code: this.formData.customer.address.zip,
+            country: this.formData.customer.address.country
+        }).pipe(
+            tap((customer: ICustomer) => {
+                this.orderDataService.insertOrder(
+                    {
+                        customer: { _id: customer._id },
+                        status: 'Processed',
+                        sub_total: this.formData.orderInfo.sub_total,
+                        shipping_cost: this.formData.orderInfo.deliveryOption.price,
+                        total: this.formData.orderInfo.total,
+                        invoice_number: 10
+                    }
+                ).pipe(
+                    tap((order: IOrderItem) => {
+                        this.paymentDataService.insertPayment({
+                            order: { _id: order._id },
+                            host_charge_id: 'Get this from some Stripe type service if payment passes',
+                            amount: this.formData.orderInfo.total
+                        }).subscribe();
+                        this.shipmentDataService.insertShipment({
+                            order: { _id: order._id },
+                            courrier_option: this.formData.orderInfo.deliveryOption.name
+                        }).subscribe();
+                        this.sendOrderItemsToDb(order).map((obs: Observable<IOrderItem>) => {
+                            obs.subscribe();
+                        });
+                    })
+                ).subscribe();
+            })
+        );
+    }
+
+    private existingCustomerSend(): Observable<any> {
+        return this.customerDataService.updateCustomer({
+            _id: this.formData.customer.id,
+            phone_number: this.formData.customer.phoneNumber,
             address: this.formData.customer.address.street,
             city: this.formData.customer.address.city,
             state: this.formData.customer.address.state,

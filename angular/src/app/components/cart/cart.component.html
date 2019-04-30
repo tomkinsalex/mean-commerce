@@ -1,32 +1,4 @@
-<h2 mat-dialog-title>Cart</h2>
+<div class="title" mat-dialog-title>Cart</div>
 <mat-dialog-content>
-  <mat-list>
-    <mat-list-item *ngFor="let item of cartItems">
-      <p matLine>
-        <span><a [routerLink]="['/item',item.productId]">{{item.title}}</a></span>
-        <span> {{item.price}}$ </span>
-        <span>
-          <button mat-button (click)="removeItemFromCart(item)">
-            <i class="fas fa-trash-alt"></i>
-          </button>
-        </span>
-      </p>
-    </mat-list-item>
-  </mat-list>
-  <h5>
-    Sub Total ({{itemCount}} items):
-    <span>{{(cart | async).grossTotal | currency}}</span>
-  </h5>
+  <app-cart-table [data]="true"></app-cart-table>
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-raised-button color="primary" (click)="emptyCart()"
-      [disabled]="itemCount === 0">
-      Empty shopping basket
-    </button>
-    <button mat-raised-button color="accent" mat-dialog-close [disabled]="itemCount === 0" routerLink="/checkout">
-      Proceed To Checkout
-    </button>
-    <button mat-raised-button mat-dialog-close>
-      Close
-    </button>
-  </mat-dialog-actions>

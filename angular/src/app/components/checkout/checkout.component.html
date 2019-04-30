@@ -1,17 +1,15 @@
 
     <div class="container">
-        <div class="board">
-            <!-- Navigation Area (Circular Tabs) -->
-            <checkout-navbar></checkout-navbar>
-            <!-- End Navigation Area (Circular Tabs) -->
-  
-            <!-- Content Area -->
-            <div class="tab-content">
-                <!-- Nested view  -->
+
+        <mat-card class="board">
+            <mat-card-header>
+                <checkout-navbar></checkout-navbar>
+            </mat-card-header>
+           
+            <mat-card-content>
                 <router-outlet></router-outlet>
-            </div>
-            <!-- End Content Area -->
-        </div>
+            </mat-card-content>
+          </mat-card>
   
         <!-- For Debugging: show our valid formData -->
         <!--<pre>{{ formData | json }}</pre> -->

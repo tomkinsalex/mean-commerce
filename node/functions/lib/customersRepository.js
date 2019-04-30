@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'),
-      Schema = mongoose.Schema,
-      Customer = require('../models/customer');
+    Schema = mongoose.Schema,
+    Customer = require('../models/customer');
 
 class CustomersRepository {
 
@@ -11,10 +11,12 @@ class CustomersRepository {
             let count = custsCount;
             console.log(`Customers count: ${count}`);
 
-            Customer.find({}, (err, customers) => {
-                if (err) { 
-                    console.log(`*** CustomersRepository.getCustomers error: ${err}`); 
-                    return callback(err); 
+            Customer.find({})
+            .populate('user', 'first_name last_name email')
+            .exec((err, customers) => {
+                if (err) {
+                    console.log(`*** CustomersRepository.getCustomers error: ${err}`);
+                    return callback(err);
                 }
                 callback(null, {
                     count: count,
@@ -25,37 +27,33 @@ class CustomersRepository {
         });
     }
 
-    /* get the customer summary
-    getCustomersSummary(skip, top, callback) {
-        console.log('*** CustomersRepository.getCustomersSummary');
-        Customer.countDocuments((err, custsCount) => {
-            let count = custsCount;
-            console.log(`Customers count: ${count}`);
-
-            Customer.find({}, { '_id': 0, 'firstName': 1, 'lastName': 1, 'city': 1, 'state': 1, 'orderCount': 1, 'gender': 1 })
-                    .skip(skip)
-                    .limit(top)
-                    .exec((err, customersSummary) => {
-                        callback(null, {
-                            count: count,
-                            customersSummary: customersSummary
-                        });
-                    });
-
-        });
-    }
-    */
 
     // get a  customer
     getCustomer(id, callback) {
         console.log('*** CustomersRepository.getCustomer');
-        Customer.findById(id, (err, customer) => {
-            if (err) { 
-                console.log(`*** CustomersRepository.getCustomer error: ${err}`); 
-                return callback(err); 
-            }
-            callback(null, customer);
-        });
+        Customer.findById(id)
+            .populate('user', 'first_name last_name email')
+            .exec((err, customer) => {
+                if (err) {
+                    console.log(`*** CustomersRepository.getCustomer error: ${err}`);
+                    return callback(err);
+                }
+                callback(null, customer);
+            });
+    }
+
+    // get a  customer
+    getCustomerByUser(id, callback) {
+        console.log('*** CustomersRepository.getCustomerByUser');
+        Customer.findOne({ user: id })
+            .populate('user', 'first_name last_name email')
+            .exec((err, customer) => {
+                if (err) {
+                    console.log(`*** CustomersRepository.getCustomerByUser error: ${err}`);
+                    return callback(err);
+                }
+                callback(null, customer);
+            });
     }
 
 
@@ -65,18 +63,19 @@ class CustomersRepository {
         let customer = new Customer();
 
         customer._id = new mongoose.Types.ObjectId();
-        customer.user = customer.userId;
+        customer.user = body.user;
         customer.phone_number = body.phone_number;
         customer.address = body.address;
         customer.city = body.city;
         customer.state = body.state;
         customer.zip_code = body.zip_code;
+        customer.country = body.country;
         customer.payment_host_id = body.payment_host_id;
 
         customer.save((err, customer) => {
-            if (err) { 
-                console.log(`*** CustomersRepository insertCustomer error: ${err}`); 
-                return callback(err, null); 
+            if (err) {
+                console.log(`*** CustomersRepository insertCustomer error: ${err}`);
+                return callback(err, null);
             }
 
             callback(null, customer);
@@ -86,10 +85,10 @@ class CustomersRepository {
     updateCustomer(id, body, callback) {
         console.log('*** CustomersRepository.editCustomer');
 
-        Customer.findById(id, (err, customer)  => {
-            if (err) { 
-                console.log(`*** CustomersRepository.editCustomer error: ${err}`); 
-                return callback(err); 
+        Customer.findById(id, (err, customer) => {
+            if (err) {
+                console.log(`*** CustomersRepository.editCustomer error: ${err}`);
+                return callback(err);
             }
 
             customer.phone_number = body.phone_number || customer.phone_number;
@@ -97,13 +96,14 @@ class CustomersRepository {
             customer.city = body.city || customer.city;
             customer.state = body.state || customer.state;
             customer.zip_code = body.zip_code || customer.zip_code;
+            customer.country = body.country || customer.country;
             customer.payment_host_id = body.payment_host_id || customer.payment_host_id;
 
 
             customer.save((err, customer) => {
-                if (err) { 
-                    console.log(`*** CustomersRepository.updateCustomer error: ${err}`); 
-                    return callback(err, null); 
+                if (err) {
+                    console.log(`*** CustomersRepository.updateCustomer error: ${err}`);
+                    return callback(err, null);
                 }
 
                 callback(null, customer);
@@ -116,9 +116,9 @@ class CustomersRepository {
     deleteCustomer(id, callback) {
         console.log('*** CustomersRepository.deleteCustomer');
         Customer.remove({ '_id': id }, (err, customer) => {
-            if (err) { 
-                console.log(`*** CustomersRepository.deleteCustomer error: ${err}`); 
-                return callback(err, null); 
+            if (err) {
+                console.log(`*** CustomersRepository.deleteCustomer error: ${err}`);
+                return callback(err, null);
             }
             callback(null, customer);
         });

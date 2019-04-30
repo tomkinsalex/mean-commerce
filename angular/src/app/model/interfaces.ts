@@ -59,7 +59,7 @@ export interface IAuthResponse{
 export interface ICustomer {
     _id?: string;
     user?: IUser;
-    phone_number?: number;
+    phone_number?: string;
     address?: string;
     city?: string;
     state?: string;

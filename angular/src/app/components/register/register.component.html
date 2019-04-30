@@ -1,6 +1,6 @@
 <h2 mat-dialog-title class="text-center">Register</h2>
 <mat-dialog-content>
-  <form [formGroup]="registerForm">
+  <form [formGroup]="registerForm" #formDir="ngForm">
     <div class="row">
       <div class="col">
         <mat-form-field class="full-width">
@@ -19,6 +19,11 @@
       <div class="col">
         <mat-form-field class="full-width">
           <input matInput type="email" formControlName="email" placeholder="Email">
+          <mat-error *ngIf="f.email.errors">
+            <mat-error *ngIf="f.email.errors.email">
+              Please enter a valid email address
+            </mat-error>
+          </mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -32,11 +37,9 @@
     <div class="text-center">
       <label class="mat-error" role="alert">{{errorMessage}}</label>
     </div>
-
-
     <div class="text-center">
-      <button type="submit" (click)="tryRegister(registerForm.value)" mat-raised-button
-        color="primary">Register</button>
+      <button type="submit" (click)="tryRegister(registerForm.value)" mat-raised-button color="primary"
+        [disabled]="registerForm.invalid">Register</button>
     </div>
     <div class="text-center">
       <p>Already have an account yet?</p>

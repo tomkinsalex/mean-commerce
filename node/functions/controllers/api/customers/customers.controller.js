@@ -6,6 +6,7 @@ class CustomersController {
     constructor(router) {
         router.get('/', this.getCustomers.bind(this));
         router.get('/:id', this.getCustomer.bind(this));
+        router.get('/user/:id', this.getCustomerByUser.bind(this));
         router.post('/', this.insertCustomer.bind(this));
         router.put('/:id', this.updateCustomer.bind(this));
         router.delete('/:id', this.deleteCustomer.bind(this));
@@ -29,6 +30,21 @@ class CustomersController {
         const id = req.params.id;
 
         customersRepo.getCustomer(id, (err, customer) => {
+            if (err) {
+                console.log('*** getCustomer error: ' + util.inspect(err));
+                res.json(null);
+            } else {
+                console.log('*** getCustomer ok');
+                res.json(customer);
+            }
+        });
+    }
+
+    getCustomerByUser(req, res){
+        console.log('*** getCustomerByUser');
+        const id = req.params.id;
+
+        customersRepo.getCustomerByUser(id, (err, customer) => {
             if (err) {
                 console.log('*** getCustomer error: ' + util.inspect(err));
                 res.json(null);

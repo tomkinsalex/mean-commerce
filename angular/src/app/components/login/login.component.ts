@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialogRef } from "@angular/material";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -11,7 +11,7 @@ import { AuthService } from '@/services'
   templateUrl: 'login.component.html',
   styleUrls: ['login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   loginForm: FormGroup;
   errorMessage: string = '';
@@ -21,15 +21,16 @@ export class LoginComponent {
     private router: Router,
     private fb: FormBuilder,
     public thisDialogRef: MatDialogRef<LoginComponent>) {
-    this.createForm();
   }
 
-  createForm() {
+  ngOnInit(){
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
+
+  get f() { return this.loginForm.controls; }
 
   openRegister() {
     this.thisDialogRef.close('register');

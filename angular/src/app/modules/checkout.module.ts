@@ -1,27 +1,33 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
-import { CheckoutComponent, CheckoutConfirmationComponent, CheckoutCustomerComponent, CheckoutPaymentComponent, CheckoutReviewComponent, CheckoutNavbarComponent, OrderComponent } from '@/components/checkout';
-import { CheckoutFlowService, CheckoutFormDataService } from '@/services';
-import { CheckoutFlowRouteGuard, CanDeactivateGuard } from '@/route-guards';
+import { CheckoutComponent, CheckoutConfirmationComponent, CheckoutCustomerComponent, CheckoutPaymentComponent, CheckoutReviewComponent, CheckoutNavbarComponent, OrderComponent, PreCheckoutComponent } from '@/components/checkout';
+import { CheckoutFlowService, CheckoutFormDataService, OrderDataService, OrderItemDataService, PaymentDataService, ShipmentDataService, DeliveryOptionsDataService } from '@/services';
+import { CheckoutFlowRouteGuard, CanDeactivateGuard, CheckoutGuard } from '@/route-guards';
 import { CheckoutRoutingModule } from '@/routers';
-import { MaterialModule } from './material.module';
+import { CustomerResolver } from '@/resolvers';
+import { SharedModule } from './shared.module';
 
 
 @NgModule({
-    imports: [CommonModule, CheckoutRoutingModule, MaterialModule, FormsModule],
+    imports: [CheckoutRoutingModule, SharedModule],
     declarations: [
         CheckoutComponent, CheckoutConfirmationComponent,
         CheckoutCustomerComponent, CheckoutPaymentComponent,
         CheckoutReviewComponent, CheckoutNavbarComponent,
-        OrderComponent
+        OrderComponent, PreCheckoutComponent
     ],
     providers: [
         CheckoutFlowService,
         CheckoutFormDataService,
         CheckoutFlowRouteGuard,
-        CanDeactivateGuard
+        CanDeactivateGuard,
+        CheckoutGuard,
+        CustomerResolver,
+        DeliveryOptionsDataService,
+        OrderDataService,
+        OrderItemDataService,
+        PaymentDataService,
+        ShipmentDataService,
     ]
 })
 export class CheckoutModule { }

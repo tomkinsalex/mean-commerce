@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialogRef } from "@angular/material";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms';
 
 import { AuthService } from '@/services';
 import { IUser, IAuthResponse } from '@/model';
@@ -11,7 +11,7 @@ import { IUser, IAuthResponse } from '@/model';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
   errorMessage: string = '';
@@ -19,19 +19,20 @@ export class RegisterComponent {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     public thisDialogRef: MatDialogRef<RegisterComponent>) {
-    this.createForm();
   }
 
-  createForm() {
-    this.registerForm = this.fb.group({
+  ngOnInit(): void {
+    this.registerForm = this.formBuilder.group({
       first: ['', Validators.required],
       last: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
     });
   }
+
+  get f() { return this.registerForm.controls; }
 
   tryRegister(value) {
 
@@ -43,10 +44,10 @@ export class RegisterComponent {
     }
 
     this.authService.register(user).subscribe((resp: IAuthResponse) => {
-      if(resp.status){
+      if (resp.status) {
         this.router.navigate(['/user']);
         this.thisDialogRef.close();
-      }else{
+      } else {
         this.errorMessage = resp.error;
       }
     })

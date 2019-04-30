@@ -2,7 +2,6 @@ const express       = require('express'),
     bodyParser      = require('body-parser'),
     cookieParser    = require('cookie-parser'),
     errorhandler    = require('errorhandler'),
-    csrf            = require('csurf'),
     morgan          = require('morgan'),
     functions       = require('firebase-functions'),
     router          = require('./routes/router'),
@@ -39,15 +38,7 @@ class Server {
         app.use(errorhandler());
         app.use(cookieParser());
         app.use(cors());
-       // app.use(csrf({ cookie: true }));   
-  
-       /*  app.use((req, res, next) => {
-            let csrfToken = req.csrfToken();
-            res.locals._csrf = csrfToken;
-            res.cookie('XSRF-TOKEN', csrfToken);
-            next();
-        });  */
-
+        
          process.on('uncaughtException', (err) => {
             if (err) console.log(err, err.stack);
         });

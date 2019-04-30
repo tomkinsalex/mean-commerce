@@ -1,13 +1,14 @@
-import { MCartItem } from "./cart-item.model";
+export interface ICart {
+  items: ICartItem[];
+  total: number;
+  itemCount: number;
+}
 
-export class MCart {
-  public items: MCartItem[] = new Array<MCartItem>();
-  public grossTotal: number = 0;
-  public itemsTotal: number = 0;
-
-  public updateFrom(src: MCart) {
-    this.items = src.items;
-    this.grossTotal = src.grossTotal;
-    this.itemsTotal = src.itemsTotal;
-  }
+export interface ICartItem {
+  id: string;
+  title: string;
+  name: string;
+  price: number;
+  quantity: number;
+  maxQuantity: number;
 }
