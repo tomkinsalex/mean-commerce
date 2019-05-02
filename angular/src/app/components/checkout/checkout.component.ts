@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { CheckoutFormDataService } from '@/services';
 import { ActivatedRoute } from '@angular/router';
-import { MCheckoutFormData, IUser, ICustomer } from '@/model';
+import { MCheckoutFormData, ICustomer } from '@/model';
 
 @Component({
     selector: 'checkout-steps'
@@ -12,7 +12,7 @@ import { MCheckoutFormData, IUser, ICustomer } from '@/model';
 })
 
 export class CheckoutComponent implements OnInit {
-    @Input() formData: MCheckoutFormData;
+    formData: MCheckoutFormData;
     customer: ICustomer;
 
     constructor(
@@ -21,6 +21,7 @@ export class CheckoutComponent implements OnInit {
     }
 
     public ngOnInit(): void {
+        this.formDataService.resetCheckoutFormData();
         this.formData = this.formDataService.getCheckoutFormData();
         this.route.data.subscribe(routeData => {
             let data = routeData['data'];

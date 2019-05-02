@@ -1,11 +1,8 @@
 <nav mat-tab-nav-bar class="checkout-navbar">
-   <div class="checkout-links">
-   <a mat-tab-link class="checkout-link"
-      *ngFor="let step of steps"
-      [routerLink]="step.step"
-      routerLinkActive #rla="routerLinkActive"
-      [active]="rla.isActive">
-      <i class="{{step.label}}"></i>
-   </a>
-</div>
- </nav>
+   <div class="checkout-links full-width">
+      <a mat-tab-link class="checkout-link" *ngFor="let step of steps" [routerLink]="step.step" routerLinkActive
+         #rla="routerLinkActive" [active]="rla.isActive">
+         <i class="{{step.label}}"></i>
+      </a>
+   </div>
+</nav>

@@ -137,3 +137,8 @@ export class MOrderInfo {
     }
 }
 
+export interface IOrderReview {
+    customer: MCustomer,
+    orderInfo: MOrderInfo
+}
+

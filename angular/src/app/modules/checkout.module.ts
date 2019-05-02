@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 
-import { CheckoutComponent, CheckoutConfirmationComponent, CheckoutCustomerComponent, CheckoutPaymentComponent, CheckoutReviewComponent, CheckoutNavbarComponent, OrderComponent, PreCheckoutComponent } from '@/components/checkout';
+import { CheckoutComponent, CheckoutConfirmationComponent, CheckoutCustomerComponent, CheckoutPaymentComponent, CheckoutReviewComponent, CheckoutNavbarComponent, OrderComponent, PreCheckoutComponent, OrderReviewTableComponent } from '@/components/checkout';
 import { CheckoutFlowService, CheckoutFormDataService, OrderDataService, OrderItemDataService, PaymentDataService, ShipmentDataService, DeliveryOptionsDataService } from '@/services';
-import { CheckoutFlowRouteGuard, CanDeactivateGuard, CheckoutGuard } from '@/route-guards';
+import { CheckoutFlowRouteGuard, CanDeactivateGuard, CheckoutGuard, OrderCompleteRouteGuard } from '@/route-guards';
 import { CheckoutRoutingModule } from '@/routers';
-import { CustomerResolver } from '@/resolvers';
+import { CustomerResolver, OrderCompleteResolver } from '@/resolvers';
 import { SharedModule } from './shared.module';
 
 
 @NgModule({
-    imports: [CheckoutRoutingModule, SharedModule],
+    imports: [ CheckoutRoutingModule, SharedModule ],
     declarations: [
         CheckoutComponent, CheckoutConfirmationComponent,
         CheckoutCustomerComponent, CheckoutPaymentComponent,
         CheckoutReviewComponent, CheckoutNavbarComponent,
-        OrderComponent, PreCheckoutComponent
+        OrderComponent, PreCheckoutComponent, OrderReviewTableComponent
     ],
     providers: [
         CheckoutFlowService,
@@ -28,6 +28,8 @@ import { SharedModule } from './shared.module';
         OrderItemDataService,
         PaymentDataService,
         ShipmentDataService,
+        OrderCompleteRouteGuard,
+        OrderCompleteResolver
     ]
 })
 export class CheckoutModule { }

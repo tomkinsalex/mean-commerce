@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ViewChildren } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable, Subscription } from "rxjs";
 
-import { MOrderInfo, ICartItem, IItem, IDeliveryOption, ICart } from '@/model';
-import { CheckoutFormDataService, DeliveryOptionsDataService, ItemDataService, CartService } from '@/services';
+import { MOrderInfo, IDeliveryOption, ICart } from '@/model';
+import { CheckoutFormDataService, DeliveryOptionsDataService, CartService } from '@/services';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,

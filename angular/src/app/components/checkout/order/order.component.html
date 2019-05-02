@@ -1,34 +1,13 @@
 <div class="container">
-  <div class="board">
-
-    <h3>{{title}}</h3>
-    <table class="full-width" cellspacing="0">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Price</th>
-          <th>Quantity</th>
-        </tr>
-      </thead>
-      <tr *ngFor="let item of orderInfo.cartItems">
-        <td>
-          {{item.cartItem.title}}
-        </td>
-        <td>
-          {{item.cartItem.quantity * item.cartItem.price | currency}}
-        </td>
-        <td>
-          {{item.cartItem.quantity}}
-        </td>
-      </tr>
-    </table>
-    <h5>Shipping: {{orderInfo.deliveryOption.name}}</h5>
-    
-    <h5>Order Total: {{orderInfo.total | currency}}</h5>
-
-    <div class="text-center">
-      <button mat-raised-button color="primary" (click)="navigateAway()">Back To Store</button>
-  </div>
-
-  </div>
+  <mat-card class="board mat-elevation-z8">
+    <mat-card-header>
+    </mat-card-header>
+    <mat-card-content>
+      <h3>{{title}}</h3>
+      <app-order-review-table [data]="formData"></app-order-review-table>
+      <div class="text-center">
+        <button mat-raised-button color="primary" (click)="navigateAway()">Back To Store</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

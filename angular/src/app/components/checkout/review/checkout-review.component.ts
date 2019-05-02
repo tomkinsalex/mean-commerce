@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MCheckoutFormData } from '@/model';
+import { MCheckoutFormData, IOrderReview } from '@/model';
 import { CheckoutFormDataService } from '@/services';
 
 @Component({
@@ -11,7 +11,8 @@ import { CheckoutFormDataService } from '@/services';
 })
 export class CheckoutReviewComponent implements OnInit {
     public title = 'Please Review Your Order';
-    @Input() formData: MCheckoutFormData;
+    public formData: MCheckoutFormData;
+    public reviewData: IOrderReview;
 
     constructor(private formDataService: CheckoutFormDataService,
         private router: Router) {
@@ -19,21 +20,14 @@ export class CheckoutReviewComponent implements OnInit {
 
     ngOnInit() {
         this.formData = this.formDataService.getCheckoutFormData();
+        this.reviewData = {
+            customer: this.formData.customer,
+            orderInfo: this.formData.orderInfo
+        }
     }
 
     public submit() {
-        this.formDataService.submitOrder()
-            .subscribe(() => {
-            },
-                (err: any) => {
-                    console.log(err);
-                    alert('Problem with Order, please try again');
-                },
-                () => {
-                    this.formDataService.formNotValid();
-                    this.router.navigate(['checkout/order']);
-                }
-            )
+        this.router.navigate(['checkout/order']);
     }
 }
 

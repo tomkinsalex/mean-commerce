@@ -1,24 +1,26 @@
-<div class="row">
-  <div *ngFor="let item of items">
 
-    <mat-card class="item-card">
-      <mat-card-header>
-        <mat-card-title><a mat-button [routerLink]="['/store/item',item._id]">{{item.title}}</a></mat-card-title>
-      </mat-card-header>
-      <a [routerLink]="['/store/item',item._id]"><img mat-card-image src="../../../assets/images/{{item.name}}.png"
-          alt=""></a>
-      <mat-card-content>
-        <p>{{item.description}}</p>
-      </mat-card-content>
-      <mat-card-actions>
+<div class="main-div row">
+  <div *ngFor="let item of items" >
+    <div class="col center">
+      <mat-card class="item-card mat-elevation-z4">
+        <mat-card-header>
+          <mat-card-title><a [routerLink]="['/store/item',item._id]">{{item.title}}</a></mat-card-title>
+        </mat-card-header>
+        <a [routerLink]="['/store/item',item._id]"><img mat-card-image src="../../../assets/images/{{item.name}}.png"
+            alt=""></a>
+        <mat-card-content>
+          <p>{{item.description}}</p>
           <p>{{item.price}}$</p>
-        <button mat-raised-button color="accent" (click)="addItemToCart(item, 1)">
-          Add to Cart
-          <i class="material-icons">
-            add_shopping_cart
-          </i>
-        </button>
-      </mat-card-actions>
-    </mat-card>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="accent" (click)="addItemToCart(item, 1)">
+            Add to Cart
+            <i class="material-icons">
+              add_shopping_cart
+            </i>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
 </div>

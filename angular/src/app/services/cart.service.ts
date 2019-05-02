@@ -90,18 +90,17 @@ export class CartService {
   }
 
 
-  private updateCart(cart: ICart): void {  
+  private updateCart(cart: ICart): void {
+    cart.items.map((item)=>{
+      if(item.quantity > item.maxQuantity){
+        item.quantity = item.maxQuantity;
+      }
+    })  
     cart.items = cart.items.filter((cartItem) => cartItem.quantity > 0);
     cart.itemCount = cart.items.map((x) => x.quantity).reduce((p, n) => p + n, 0);
     cart.total = cart.items
     .map((item) => item.quantity * item.price)
     .reduce((previous, current) => previous + current, 0);
-
-    cart.items.map((item)=>{
-      if(item.quantity > item.maxQuantity){
-        item.quantity = item.maxQuantity;
-      }
-    })
   }
 
   private retrieve(): ICart {

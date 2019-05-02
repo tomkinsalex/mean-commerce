@@ -1,0 +1,42 @@
+<div>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="'navigation'" [mode]="'side'">
+      <mat-toolbar color="primary">Menu</mat-toolbar>
+      <mat-nav-list>
+        <a [routerLink]="['/store']" mat-list-item>Store</a>
+        <a mat-list-item href (click)="$event.preventDefault();logout()">Sign Out</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <mat-toolbar-row>
+          <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+            <i aria-label="Side nav toggle icon" class="fas fa-bars"></i>
+          </button>
+          <span>MEAN Commerce</span>
+          <span class="spacer"></span>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <mat-toolbar color="accent">
+        <mat-toolbar-row>
+          <span>User Dashboard</span>
+          <span class="spacer"></span>
+          <span> Hi {{user.first_name}}!</span>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <div class="body">
+        <mat-tab-group #tabGroup (selectedTabChange)="handleTabChange($event)">
+          <mat-tab label="Orders">
+            <app-orders></app-orders>
+          </mat-tab>
+          <mat-tab label="Profile">
+            <app-profile *ngIf="activeTab === 'Profile'"></app-profile>
+          </mat-tab>
+          <mat-tab label="Change Password">
+            <app-change-password></app-change-password>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

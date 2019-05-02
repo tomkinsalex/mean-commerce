@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { CartService, CheckoutFormDataService } from '@/services';
-import { MOrderInfo } from '@/model';
 
 
 @Component({
@@ -12,18 +11,26 @@ import { MOrderInfo } from '@/model';
   styleUrls: ['./order.component.scss',
     '../checkout.scss']
 })
+
 export class OrderComponent implements OnInit, OnDestroy {
-  public title = 'Your Order has Completed';
-  public orderInfo: MOrderInfo;
+
+  public title: string = 'Your Order has Completed';
+  public formData: any;
   public canNavigate: boolean = false;
 
   constructor(private formDataService: CheckoutFormDataService,
     private cartService: CartService,
     private snackBar: MatSnackBar,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.orderInfo = this.formDataService.getOrderInfo();
+    this.route.data.subscribe(routeData => {
+      let data = routeData['data'];
+      if (data) {
+        this.formData = data;
+      }
+    })
   }
 
   navigateAway() {
@@ -40,8 +47,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     });
     return false;
   }
-
-
+  
   ngOnDestroy() {
     this.formDataService.resetCheckoutFormData();
     this.cartService.empty();

@@ -20,7 +20,7 @@ export const routes: Routes = [
     path: 'checkout', canActivate:[ PopulatedCartRouteGuard ], loadChildren: '@/modules/checkout.module#CheckoutModule'
   },
   {
-    path: 'user', canActivate:[ AuthGuard ], loadChildren: '@/modules/user.module#UserModule'
+    path: 'user', canActivate:[ AuthGuard ], loadChildren: '@/modules/user-dashboard.module#UserDashboardModule'
   },
   { path: '**', pathMatch: 'full', redirectTo: 'store/main' } //catch any unfound routes and redirect to home page
 ];

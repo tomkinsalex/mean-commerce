@@ -3,7 +3,7 @@
 
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef> Item </th>
-      <td mat-cell *matCellDef="let item"> {{item.title}} {{item.price}}$ </td>
+      <td mat-cell *matCellDef="let item"> {{item.title}} {{item.price | currency }} </td>
     </ng-container>
 
     <ng-container matColumnDef="quantity">

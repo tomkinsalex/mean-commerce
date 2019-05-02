@@ -6,3 +6,4 @@ export * from './payment/checkout-payment.component';
 export * from './review/checkout-review.component';
 export * from './order/order.component';
 export * from './pre-checkout/pre-checkout.component';
+export * from './order-review-table/order-review-table.component';

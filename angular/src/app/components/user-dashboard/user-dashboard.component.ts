@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-
 import { AuthService } from '@/services';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IUser } from '@/model';
+import { MatTabChangeEvent } from '@angular/material';
 
 @Component({
-  selector: 'page-user',
-  templateUrl: 'user.component.html',
-  styleUrls: ['user.component.scss']
+  selector: 'app-user-dashboard',
+  templateUrl: './user-dashboard.component.html',
+  styleUrls: ['./user-dashboard.component.scss']
 })
-export class UserComponent implements OnInit {
+export class UserDashboardComponent implements OnInit {
 
   public user: IUser = {};
+  public activeTab: string;
 
   constructor(
     private authService: AuthService,
@@ -27,9 +28,13 @@ export class UserComponent implements OnInit {
     });
   }
 
-
   logout() {
     this.authService.logout();
     this.router.navigate(['/store']);
   }
+
+  handleTabChange(tab: MatTabChangeEvent) {
+    this.activeTab = tab.tab.textLabel;
+  }
+
 }

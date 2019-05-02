@@ -1,16 +1,14 @@
 
     <div class="container">
 
-        <mat-card class="board">
-            <mat-card-header>
-                <checkout-navbar></checkout-navbar>
-            </mat-card-header>
+        <mat-card class="board mat-elevation-z8">
            
             <mat-card-content>
+                <checkout-navbar></checkout-navbar>
                 <router-outlet></router-outlet>
             </mat-card-content>
           </mat-card>
   
         <!-- For Debugging: show our valid formData -->
-        <!--<pre>{{ formData | json }}</pre> -->
+       <!-- <pre>{{ formData | json }}</pre> -->
     </div>

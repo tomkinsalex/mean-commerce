@@ -96,6 +96,7 @@ export interface IOrderItem {
     item?: IItem;
     order?: IOrder;
     price?: number;
+    quantity?: number;
 }
 export interface IOrderItemResponse {
     orderitem: IOrderItem;
